@@ -19,6 +19,12 @@ import QnaList from "./components/Qna/QnaList.vue";
 import QnaDetail from "./components/Qna/QnaDetail.vue";
 import QnaModify from "./components/Qna/QnaModify.vue";
 import QnaRegister from "./components/Qna/QnaRegister.vue";
+//Announce Board
+import Announce from "./views/Announce.vue";
+import AnnounceList from "./components/Announce/AnnounceList.vue";
+import AnnounceDetail from "./components/Announce/AnnounceDetail.vue";
+import AnnounceModify from "./components/Announce/AnnounceModify.vue";
+import AnnounceRegister from "./components/Announce/AnnounceRegister.vue";
 // User
 import UserView from "@/views/UserView.vue";
 import UserLogin from "@/components/User/UserLogin.vue";
@@ -37,7 +43,7 @@ const onlyAuthUser = async (to, from, next) => {
   }
   if (checkUserInfo === null) {
     alert("로그인이 필요한 페이지입니다..");
-    next({ name: "signIn" });
+    next({ name: "login" });
     // router.push({ name: "signIn" });
   } else {
     // console.log("로그인 했다.");
@@ -148,6 +154,37 @@ export default new Router({
             header: { colorOnScroll: 400 },
             footer: { backgroundColor: "black" },
           },
+        },
+      ],
+    },
+    {
+      path: "/announce",
+      name: "announce",
+      components: { default: Announce, header: MainNavbar, footer: MainFooter },
+      redirect: "/announce/announcelist",
+      children: [
+        {
+          path: "announcelist",
+          name: "announcelist",
+          component: AnnounceList,
+        },
+        {
+          path: "announcewrite",
+          name: "announcewrite",
+          beforeEnter: onlyAuthUser,
+          component: AnnounceRegister,
+        },
+        {
+          path: "announcedetail/:no",
+          name: "announcedetail",
+          beforeEnter: onlyAuthUser,
+          component: AnnounceDetail,
+        },
+        {
+          path: "announcemodify/:no",
+          name: "announcemodify",
+          beforeEnter: onlyAuthUser,
+          component: AnnounceModify,
         },
       ],
     },
