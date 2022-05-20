@@ -210,7 +210,6 @@ export default {
       this.modifyMode = true;
     },
     userModify() {
-      console.log(this.userInfo);
       if (this.inputPwd != this.userInfo.userPwd || this.inputPwd === "") {
         alert("현재 비밀번호를 입력해주세요");
       } else {
@@ -261,7 +260,6 @@ export default {
           this.classicModal = false;
         },
         (err) => {
-          console.log(err.response.status);
           if (err.response.status == 403) {
             alert("현재 비밀번호가 틀렸습니다.");
           }

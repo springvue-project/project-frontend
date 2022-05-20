@@ -22,11 +22,10 @@
                 </router-link>
               </md-list-item>
               <md-list-item
-                href="https://demos.creative-tim.com/vue-material-kit/documentation/"
-                target="_blank"
-              >
-                <i class="material-icons">content_paste</i>
-                <p>Announcement</p>
+                ><router-link to="/announce">
+                  <i class="material-icons">content_paste</i>
+                  <p>Announcement</p>
+                </router-link>
               </md-list-item>
               <md-list-item>
                 <router-link to="/qna">
