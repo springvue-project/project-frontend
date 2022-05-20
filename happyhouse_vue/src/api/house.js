@@ -31,4 +31,11 @@ function houseList(params, success, fail) {
     .catch(fail);
 }
 
-export { sidoList, gugunList, houseList, dongList };
+function houseDealList(params, success, fail) {
+  api
+    .get(`/map/aptdeal`, { params: params })
+    .then(success)
+    .catch(fail);
+}
+
+export { sidoList, gugunList, dongList, houseList, houseDealList };

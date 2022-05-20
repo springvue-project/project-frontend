@@ -44,7 +44,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["sidos", "guguns", "houses"]),
+    ...mapState(["sidos", "guguns", "houses"]),
     // sidos() {
     //   return this.$store.state.sidos;
     // },
@@ -56,8 +56,8 @@ export default {
     this.getSido();
   },
   methods: {
-    ...mapActions(houseStore, ["getSido", "getGugun", "getHouseList"]),
-    ...mapMutations(houseStore, ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST"]),
+    ...mapActions(["getSido", "getGugun", "getHouseList"]),
+    ...mapMutations(["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST"]),
     // sidoList() {
     //   this.getSido();
     // },
