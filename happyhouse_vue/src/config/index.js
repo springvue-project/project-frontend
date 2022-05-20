@@ -1,7 +1,11 @@
 const API_BASE_URL = "http://localhost:9999/vue";
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 const APT_DEAL_URL =
   "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev";
+=======
+const APT_DEAL_URL = "http://localhost:9999/vue";
+>>>>>>> afbe9641754f50d738b55ef8be6d4924ee901f34
 
 export { API_BASE_URL, APT_DEAL_URL };
 =======

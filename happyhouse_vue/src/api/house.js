@@ -17,11 +17,18 @@ function gugunList(params, success, fail) {
     .catch(fail);
 }
 
-function houseList(params, success, fail) {
-  house
-    .get(``, { params: params })
+function dongList(params, success, fail) {
+  api
+    .get(`/map/dong`, { params: params })
     .then(success)
     .catch(fail);
 }
 
-export { sidoList, gugunList, houseList };
+function houseList(params, success, fail) {
+  api
+    .get(`/map/apt`, { params: params })
+    .then(success)
+    .catch(fail);
+}
+
+export { sidoList, gugunList, houseList, dongList };

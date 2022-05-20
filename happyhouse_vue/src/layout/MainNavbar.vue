@@ -12,6 +12,15 @@
         </h3>
       </div>
       <div class="md-toolbar-section-end">
+        <md-button
+          class="md-just-icon md-simple md-toolbar-toggle"
+          :class="{ toggled: toggledClass }"
+          @click="toggleNavbarMobile()"
+        >
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </md-button>
         <div class="md-collapse">
           <div class="md-collapse-wrapper">
             <md-list>
@@ -124,6 +133,7 @@ export default {
   data() {
     return {
       extraNavClasses: "",
+      toggledClass: false,
     };
   },
   computed: {
@@ -138,6 +148,26 @@ export default {
       sessionStorage.removeItem("access-token");
       if (this.$route.path != "/") this.$router.push({ name: "index" });
     },
+    toggleNavbarMobile() {
+      this.NavbarStore.showNavbar = !this.NavbarStore.showNavbar;
+      this.toggledClass = !this.toggledClass;
+      this.bodyClick();
+    },
+    bodyClick() {
+      let bodyClick = document.getElementById("bodyClick");
+
+      if (bodyClick === null) {
+        let body = document.querySelector("body");
+        let elem = document.createElement("div");
+        elem.setAttribute("id", "bodyClick");
+        body.appendChild(elem);
+
+        let bodyClick = document.getElementById("bodyClick");
+        bodyClick.addEventListener("click", this.toggleNavbarMobile);
+      } else {
+        bodyClick.remove();
+      }
+    },
   },
 };
 </script>
@@ -145,5 +175,8 @@ export default {
 <style scoped>
 .dropdown-toggle::after {
   display: none;
+}
+.md-list-item-content.md-ripple.md-disabled {
+  margin-left: 14px;
 }
 </style>
