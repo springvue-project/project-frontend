@@ -22,4 +22,14 @@ function houseInstance() {
   return instance;
 }
 
-export { apiInstance, houseInstance };
+function parkingInstance() {
+  const instance = axios.create({
+    baseURL: PARKING_URL,
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+  return instance;
+}
+
+export { apiInstance, houseInstance, parkingInstance };
