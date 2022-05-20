@@ -24,12 +24,12 @@ export default {
   props: {
     headerColor: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   data() {
     return {
-      cardHidden: true
+      cardHidden: true,
     };
   },
   beforeMount() {
@@ -41,8 +41,8 @@ export default {
     },
     getClass: function(headerColor) {
       return "md-card-header-" + headerColor + "";
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -48,7 +48,7 @@
 
 <script>
 // import moment from "moment";
-import http from "@/api/http";
+import { getArticle, deleteArticle } from "@/api/qna";
 
 export default {
   name: "qnadetail",
@@ -65,9 +65,15 @@ export default {
     },
   },
   created() {
-    http.get(`/qna/${this.$route.params.articleno}`).then(({ data }) => {
-      this.article = data;
-    });
+    getArticle(
+      this.$route.params.articleno,
+      (response) => {
+        this.article = response.data;
+      },
+      (error) => {
+        console.log("삭제시 에러발생!!", error);
+      },
+    );
   },
   methods: {
     listArticle() {
@@ -78,20 +84,13 @@ export default {
         name: "qnamodify",
         params: { articleno: this.article.articleno },
       });
-      this.$router.push({ path: `/qna/qnamodify/${this.article.articleno}` });
     },
     deleteArticle() {
-      if (confirm("정말로 삭제?")) {
-        this.$router.replace({
-          name: "qnadelete",
-          params: { articleno: this.article.articleno },
+      if (confirm("정말로 삭제하시겠습니까?")) {
+        deleteArticle(this.article.articleno, () => {
+          this.$router.push({ name: "qnalist" });
         });
       }
-    },
-  },
-  filters: {
-    dateFormat(regtime) {
-      return moment(new Date(regtime)).format("YY.MM.DD hh:mm:ss");
     },
   },
 };

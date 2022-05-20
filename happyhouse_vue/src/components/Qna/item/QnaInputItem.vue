@@ -60,7 +60,10 @@
 </template>
 
 <script>
-import http from "@/api/http";
+import { writeArticle, getArticle, modifyArticle } from "@/api/qna";
+import { mapState } from "vuex";
+
+const userStore = "userStore";
 
 export default {
   name: "qnainputitem",
@@ -78,15 +81,27 @@ export default {
   props: {
     type: { type: String },
   },
+  computed: {
+    ...mapState(userStore, ["userInfo"]),
+  },
   created() {
     if (this.type === "modify") {
-      http.get(`/qna/${this.$route.params.articleno}`).then(({ data }) => {
-        // this.article.articleno = data.article.articleno;
-        // this.article.userid = data.article.userid;
-        // this.article.subject = data.article.subject;
-        // this.article.content = data.article.content;
-        this.article = data;
-      });
+      getArticle(
+        this.$route.params.articleno,
+        ({ data }) => {
+          // this.article.articleno = data.article.articleno;
+          // this.article.userid = data.article.userid;
+          // this.article.subject = data.article.subject;
+          // this.article.content = data.article.content;
+          this.article = data;
+        },
+        (error) => {
+          console.log(error);
+        },
+      );
+      this.isUserid = true;
+    } else {
+      this.article.userid = this.userInfo.userId;
       this.isUserid = true;
     }
   },
@@ -123,30 +138,34 @@ export default {
       this.$router.push({ name: "qnalist" });
     },
     registArticle() {
-      http
-        .post(`/qna`, {
+      writeArticle(
+        {
           userid: this.article.userid,
           subject: this.article.subject,
           content: this.article.content,
-        })
-        .then(({ data }) => {
+        },
+        ({ data }) => {
           let msg = "등록 처리시 문제가 발생했습니다.";
           if (data === "success") {
             msg = "등록이 완료되었습니다.";
           }
           alert(msg);
           this.moveList();
-        });
+        },
+        (error) => {
+          console.log(error);
+        },
+      );
     },
     modifyArticle() {
-      http
-        .put(`/qna/${this.article.articleno}`, {
+      modifyArticle(
+        {
           articleno: this.article.articleno,
           userid: this.article.userid,
           subject: this.article.subject,
           content: this.article.content,
-        })
-        .then(({ data }) => {
+        },
+        ({ data }) => {
           let msg = "수정 처리시 문제가 발생했습니다.";
           if (data === "success") {
             msg = "수정이 완료되었습니다.";
@@ -154,7 +173,11 @@ export default {
           alert(msg);
           // 현재 route를 /list로 변경.
           this.$router.push({ name: "qnalist" });
-        });
+        },
+        (error) => {
+          console.log(error);
+        },
+      );
     },
     moveList() {
       this.$router.push({ name: "qnalist" });

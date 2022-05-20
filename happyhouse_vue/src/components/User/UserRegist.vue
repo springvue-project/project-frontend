@@ -57,7 +57,7 @@
 
 <script>
 import { LoginCard } from "@/components";
-import http from "@/api/http";
+import { regist } from "@/api/user";
 
 export default {
   components: {
@@ -97,14 +97,20 @@ export default {
         (this.user.phoneNum = "");
     },
     regist() {
-      http.post(`/user/regist`, this.user).then((response) => {
-        if (response.status == "200") {
-          alert("회원가입 성공");
-          this.$router.push("/user/login");
-        } else {
-          alret("회원가입 실패");
-        }
-      });
+      regist(
+        this.user,
+        (response) => {
+          if (response.status == "200") {
+            alert("회원가입 성공");
+            this.$router.push("/user/login");
+          }
+        },
+        (response) => {
+          if (response.status != "200") {
+            alret("회원가입 실패");
+          }
+        },
+      );
     },
   },
 };

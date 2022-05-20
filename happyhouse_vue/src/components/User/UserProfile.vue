@@ -24,7 +24,7 @@
                 </div>
                 <div class="name">
                   <h3 class="title">
-                    {{ userInfo.userId }}
+                    {{ userInfo.userid }}
                   </h3>
                 </div>
                 <md-field>
@@ -67,10 +67,12 @@
                     v-model="userInfo.phoneNum"
                   ></md-input>
                 </md-field>
+
                 <md-field v-if="modifyMode">
                   <label>비밀번호</label>
-                  <md-input v-model="inputPwd"></md-input>
+                  <md-input v-model="inputPwd" type="password"></md-input>
                   <md-button
+                    id="tmp"
                     v-if="modifyMode"
                     class="md-simple classic-modal"
                     @click="classicModal = true"
@@ -104,6 +106,25 @@
                           ref="newpwd"
                         ></md-input>
                       </md-field>
+                      <div class="alert alert-warning">
+                        <div class="container">
+                          <button
+                            type="button"
+                            aria-hidden="true"
+                            class="close"
+                            @click="
+                              (event) => removeNotify(event, 'alert-warning')
+                            "
+                          >
+                            <md-icon>clear</md-icon>
+                          </button>
+                          <div class="alert-icon">
+                            <md-icon>warning</md-icon>
+                          </div>
+                          <br />비밀번호 변경 시, 수정 내역은 저장되지 않고 다시
+                          로그인 하셔야 합니다.
+                        </div>
+                      </div>
                     </template>
 
                     <template slot="footer">
@@ -134,11 +155,13 @@
 </template>
 
 <script>
-import http from "@/api/http";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import { Modal } from "@/components";
+import { userModify, changePwd } from "@/api/user";
+const userStore = "userStore";
 
 export default {
+  name: "profile",
   components: {
     Modal,
   },
@@ -151,28 +174,6 @@ export default {
       inputPwd: "",
       currentPwd: "",
       newPwd: "",
-
-      userInfo: {},
-      tabPane1: [
-        { image: require("@/assets/img/examples/studio-1.jpg") },
-        { image: require("@/assets/img/examples/studio-2.jpg") },
-        { image: require("@/assets/img/examples/studio-4.jpg") },
-        { image: require("@/assets/img/examples/studio-5.jpg") },
-      ],
-      tabPane2: [
-        { image: require("@/assets/img/examples/olu-eletu.jpg") },
-        { image: require("@/assets/img/examples/clem-onojeghuo.jpg") },
-        { image: require("@/assets/img/examples/cynthia-del-rio.jpg") },
-        { image: require("@/assets/img/examples/mariya-georgieva.jpg") },
-        { image: require("@/assets/img/examples/clem-onojegaw.jpg") },
-      ],
-      tabPane3: [
-        { image: require("@/assets/img/examples/mariya-georgieva.jpg") },
-        { image: require("@/assets/img/examples/studio-3.jpg") },
-        { image: require("@/assets/img/examples/clem-onojeghuo.jpg") },
-        { image: require("@/assets/img/examples/olu-eletu.jpg") },
-        { image: require("@/assets/img/examples/studio-1.jpg") },
-      ],
     };
   },
   props: {
@@ -186,40 +187,40 @@ export default {
     },
   },
   computed: {
-    ...mapState(["loginUser"]),
+    ...mapState(userStore, ["userInfo"]),
     headerStyle() {
       return {
         backgroundImage: `url(${this.header})`,
       };
     },
   },
-  mounted() {
-    if (this.loginUser.userId == null) {
-      alert("로그인 후 이용가능 합니다.");
-      this.$router.push("/user/login");
-    } else {
-      this.user();
-    }
-  },
+  mounted() {},
   methods: {
-    user() {
-      http.get(`user/detail/${this.loginUser.userId}`).then((data) => {
-        if (data.status == "200") {
-          console.log(data.data.userId);
-          this.userInfo = data.data;
-        }
-      });
-    },
+    ...mapMutations(userStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
+    // user() {
+    //   console.log(this.loginUser);
+    //   http.get(`user/detail/${this.loginUser.userId}`).then((data) => {
+    //     if (data.status == "200") {
+    //       console.log(data.data.userId);
+    //       this.userInfo = data.data;
+    //     }
+    //   });
+    // },
     changeMode() {
       this.modifyMode = true;
     },
     userModify() {
-      http.put(`user/modify`, this.userInfo).then((data) => {
-        if (data.status == "200") {
-          alert("수정 완료");
-          this.modifyMode = !this.modifyMode;
-        }
-      });
+      console.log(this.userInfo);
+      if (this.inputPwd != this.userInfo.userPwd || this.inputPwd === "") {
+        alert("현재 비밀번호를 입력해주세요");
+      } else {
+        userModify(this.userInfo, (data) => {
+          if (data.status == "200") {
+            alert("수정 완료");
+            this.modifyMode = !this.modifyMode;
+          }
+        });
+      }
     },
     classicModalHide() {
       this.classicModal = false;
@@ -239,25 +240,40 @@ export default {
         currentPwd: this.currentPwd,
         newPwd: this.newPwd,
       };
-      http
-        .put(`/user/modifypwd`, pwdInfo)
-        .then((data) => {
+
+      changePwd(
+        pwdInfo,
+        (data) => {
           if (data.status == "200") {
             alert("비밀번호가 변경되었습니다.");
             this.modifyMode = !this.modifyMode;
+
+            //비밀번호 변경 후 로그아웃
+            this.SET_IS_LOGIN(false);
+            this.SET_USER_INFO(null);
+            sessionStorage.removeItem("access-token");
+            if (this.$route.path != "/") this.$router.push({ name: "index" });
           } else {
             alert("비밀번호 변경 중, 오류 발생");
           }
           this.currentPwd = "";
           this.newPwd = "";
           this.classicModal = false;
-        })
-        .catch((err) => {
+        },
+        (err) => {
           console.log(err.response.status);
           if (err.response.status == 403) {
             alert("현재 비밀번호가 틀렸습니다.");
           }
-        });
+        },
+      );
+    },
+    removeNotify(e, notifyClass) {
+      var target = e.target;
+      while (target.className.indexOf(notifyClass) === -1) {
+        target = target.parentNode;
+      }
+      return target.parentNode.removeChild(target);
     },
   },
 };

@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import http from "@/api/http";
+import { listArticle } from "@/api/qna.js";
 import QnaListItem from "./item/QnaListItem.vue";
 
 export default {
@@ -56,9 +56,21 @@ export default {
     };
   },
   created() {
-    http.get(`/qna`).then(({ data }) => {
-      this.articles = data;
-    });
+    let param = {
+      pg: 1,
+      spp: 20,
+      key: null,
+      word: null,
+    };
+    listArticle(
+      param,
+      (response) => {
+        this.articles = response.data;
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
   },
   methods: {
     moveWrite() {

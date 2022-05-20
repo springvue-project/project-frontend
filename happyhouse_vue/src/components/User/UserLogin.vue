@@ -40,17 +40,17 @@
                   </template>
                 </modal>
               </div>
-              <md-field class="md-form-group " slot="inputs">
+              <md-field class="md-form-group" slot="inputs">
                 <md-icon>face</md-icon>
                 <label>ID...</label>
-                <md-input v-model="loginInfo.userId" ref="userid"></md-input>
+                <md-input v-model="userInfo.userId" ref="userid"></md-input>
               </md-field>
 
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>lock_outline</md-icon>
                 <label>Password...</label>
                 <md-input
-                  v-model="loginInfo.userPwd"
+                  v-model="userInfo.userPwd"
                   type="password"
                   ref="password"
                 ></md-input>
@@ -59,7 +59,7 @@
               <md-button
                 slot="footer"
                 class="md-simple md-success md-lg"
-                @click="doLogin"
+                @click="confirm"
               >
                 Login
               </md-button>
@@ -73,11 +73,14 @@
 
 <script>
 import { LoginCard } from "@/components";
-import { mapGetters, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import { Modal } from "@/components";
-import http from "@/api/http";
+import { findPwd } from "@/api/user";
+
+const userStore = "userStore";
 
 export default {
+  name: "UserLogin",
   components: {
     LoginCard,
     Modal,
@@ -88,7 +91,7 @@ export default {
       findId: "",
       msg: "",
       classicModal: false,
-      loginInfo: {
+      userInfo: {
         userId: "",
         userPwd: "",
       },
@@ -109,32 +112,22 @@ export default {
     showMsg: function() {
       return this.msg;
     },
+    ...mapState(userStore, ["isLogin", "isLoginError"]),
   },
   methods: {
     ...mapGetters(["loginCheck"]),
-    ...mapActions(["login"]),
-    doLogin() {
-      if (!this.loginInfo.userId) {
-        this.$refs.userid.$el.focus();
-        return;
-      }
-      if (!this.loginInfo.userPwd) {
-        this.$refs.password.$el.focus();
-        return;
-      }
-      this.login(this.loginInfo);
-      if (this.loginCheck) {
-        alert("로그인");
-        this.$router.push("/");
+    ...mapActions(userStore, ["userConfirm", "getUserInfo"]),
+    async confirm() {
+      await this.userConfirm(this.userInfo);
+      let token = sessionStorage.getItem("access-token");
+      if (this.isLogin) {
+        await this.getUserInfo(token);
+        this.$router.push({ name: "index" });
       }
     },
     findPwd() {
-      http.post(`/user/findpwd/${this.findId}`).then((data) => {
-        if (data.data.pwd) {
-          this.msg = `회원님의 비밀번호는 ${data.data.pwd} 입니다.`;
-        } else if (data.data.msg) {
-          this.msg = data.data.msg;
-        }
+      findPwd(this.findId, (data) => {
+        this.msg = `회원님의 비밀번호는 ${data.data.pwd} 입니다.`;
       });
     },
     classicModalHide() {

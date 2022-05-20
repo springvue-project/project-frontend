@@ -26,8 +26,8 @@ export default {
   methods: {
     closeModal: function() {
       this.$emit("close");
-    }
-  }
+    },
+  },
 };
 </script>
 

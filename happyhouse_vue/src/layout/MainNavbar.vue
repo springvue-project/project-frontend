@@ -57,7 +57,7 @@
                       </md-button>
                       <ul
                         class="dropdown-menu dropdown-with-icons"
-                        v-if="loginUser.userId"
+                        v-if="userInfo"
                       >
                         <li>
                           <a @click="doLogout"
@@ -99,7 +99,9 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapMutations } from "vuex";
+
+const userStore = "userStore";
 
 export default {
   components: {},
@@ -126,19 +128,21 @@ export default {
     };
   },
   computed: {
-    ...mapState(["loginUser"]),
+    ...mapState(userStore, ["isLogin", "userInfo"]),
   },
   methods: {
-    ...mapActions(["logout"]),
+    ...mapMutations(userStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
     doLogout() {
-      this.logout();
-      if (!this.loginUser.userId) {
-        this.$router.push("/user/login");
-      }
+      // console.log("memberStore : ", ms);
+      this.SET_IS_LOGIN(false);
+      this.SET_USER_INFO(null);
+      sessionStorage.removeItem("access-token");
+      if (this.$route.path != "/") this.$router.push({ name: "index" });
     },
   },
 };
 </script>
+
 <style scoped>
 .dropdown-toggle::after {
   display: none;
