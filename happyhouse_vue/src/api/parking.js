@@ -17,4 +17,18 @@ function gugunList(params, success, fail) {
     .catch(fail);
 }
 
-export { sidoList, gugunList };
+function dongList(params, success, fail) {
+  api
+    .get(`/map/dong`, { params: params })
+    .then(success)
+    .catch(fail);
+}
+
+function parkingList(params, success, fail) {
+  api
+    .get(`/park/dong`, { params: params })
+    .then(success)
+    .catch(fail);
+}
+
+export { sidoList, gugunList, dongList, parkingList };

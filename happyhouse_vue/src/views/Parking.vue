@@ -7,13 +7,30 @@
         </h3>
       </div>
     </div>
-    <router-view></router-view>
+    <div class="main main-raised">
+      <div class="section profile-content">
+        <div class="container">
+          <b-row>
+            <b-col>
+              <parking-search-bar></parking-search-bar>
+            </b-col>
+          </b-row>
+          <parking-list />
+          <!-- <house-map /> -->
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import ParkingSearchBar from "@/components/Parking/ParkingSearchBar.vue";
+import ParkingList from "@/components/Parking/ParkingList.vue";
 export default {
-  components: {},
+  components: {
+    ParkingSearchBar,
+    ParkingList,
+  },
   bodyClass: "login-page",
   data() {
     return {};
