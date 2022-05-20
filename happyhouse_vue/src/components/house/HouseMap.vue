@@ -59,6 +59,7 @@ export default {
       this.map = new kakao.maps.Map(container, options);
 
       // 기존 마커 제거
+      //주석생성
       this.removeMarkers();
       // 마커 생성
       this.createMarkers();

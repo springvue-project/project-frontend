@@ -59,6 +59,7 @@ export default {
     // house() {
     //   return this.$store.state.house;
     // },
+    //주석생성
   },
   filters: {
     price(value) {

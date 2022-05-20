@@ -1,7 +1,7 @@
-import { apiInstance, houseInstance } from "./index.js";
+import { apiInstance, parkingInstance } from "./index.js";
 
 const api = apiInstance();
-const house = houseInstance();
+const parking = houseInstance();
 
 function sidoList(success, fail) {
   api
