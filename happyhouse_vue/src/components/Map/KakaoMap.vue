@@ -71,7 +71,7 @@ export default {
       }
 
       const positions = markerPositions.map(
-        (position) => new kakao.maps.LatLng(...position)
+        (position) => new kakao.maps.LatLng(...position),
       );
 
       if (positions.length > 0) {
@@ -80,12 +80,12 @@ export default {
             new kakao.maps.Marker({
               map: this.map,
               position,
-            })
+            }),
         );
 
         const bounds = positions.reduce(
           (bounds, latlng) => bounds.extend(latlng),
-          new kakao.maps.LatLngBounds()
+          new kakao.maps.LatLngBounds(),
         );
 
         this.map.setBounds(bounds);
