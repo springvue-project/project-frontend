@@ -135,13 +135,19 @@ export default {
     classicModalHide() {
       this.classicModal = false;
     },
-    initMap() {
-      var container = document.getElementById("map");
-      var options = {
-        center: new kakao.maps.LatLng(37.566826, 126.9786567),
-        level: 3,
-      };
-      this.map = new kakao.maps.Map(container, options);
+    mounted() {
+      if (!window.kakao || !window.kakao.maps) {
+        const script = document.createElement("script");
+        script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=5bac587b1d037d39e5c1afb5a245aac9&autoload=false&libraries=services`;
+        /* global kakao */
+        script.addEventListener("load", () => {
+          console.log(kakao);
+          kakao.maps.load(this.initMap);
+        });
+        document.head.appendChild(script);
+      } else {
+        this.initMap();
+      }
     },
     displayMarker(locPosition, message) {
       // 마커를 생성합니다
