@@ -7,12 +7,14 @@ Vue.use(Vuex);
 import userStore from "@/store/modules/userStore.js";
 import qnaStore from "@/store/modules/qnaStore.js";
 import houseStore from "@/store/modules/houseStore.js";
+import parkingStore from "@/store/modules/parkingStore.js";
 
 const store = new Vuex.Store({
   modules: {
     userStore,
     qnaStore,
     houseStore,
+    parkingStore,
   },
   plugins: [
     createPersistedState({

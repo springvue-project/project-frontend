@@ -4,22 +4,10 @@
       <div class="section section-javascript">
         <div class="container">
           <div class="card-body">
-            <div class="form-group form-inline justify-content-center">
-              <label class="mr-2" for="sido">시도 : </label>
-              <select class="form-control" id="sido">
-                <option value="0">선택</option>
-              </select>
-              <label class="mr-2 ml-3" for="gugun">구군 : </label>
-              <select class="form-control" id="gugun">
-                <option value="0">선택</option>
-              </select>
-              <label class="mr-2 ml-3" for="dong">읍면동 : </label>
-              <select class="form-control" id="dong">
-                <option value="0">선택</option>
-              </select>
-            </div>
             <div class="center">
-              <span class="text-center" id="spantext"> </span>
+              <parking-search-bar>
+                <span class="text-center" id="spantext"> </span>
+              </parking-search-bar>
             </div>
             <table class="table mt-2">
               <colgroup>
@@ -51,7 +39,11 @@
 </template>
 
 <script>
+import ParkingSearchBar from "@/components/Parking/ParkingSearchBar.vue";
 export default {
+  components: {
+    ParkingSearchBar,
+  },
   data() {
     return {
       map: null,
