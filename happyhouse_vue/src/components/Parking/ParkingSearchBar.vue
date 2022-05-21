@@ -13,18 +13,18 @@
     <div>
       <b-select
         style="width:100%"
-        v-model="sidoCode"
-        :options="sidos"
-        @change="gugunList"
+        v-model="gugunCode"
+        :options="guguns"
+        @change="dongList"
       ></b-select>
     </div>
     <label class="mr-2 ml-3" for="dong">읍면동 : </label>
     <div>
       <b-select
         style="width:100%"
-        v-model="sidoCode"
-        :options="sidos"
-        @change="gugunList"
+        v-model="dongCode"
+        :options="dongs"
+        @change="searchParking"
       ></b-select>
     </div>
   </div>
@@ -41,10 +41,13 @@ export default {
     return {
       sidoCode: null,
       gugunCode: null,
+      dongCode: null,
     };
   },
   computed: {
-    ...mapState(["sidos", "guguns", "houses"]),
+
+    ...mapState(parkingStrore, ["sidos", "guguns", "dongs", "parkings"]),
+
     // sidos() {
     //   return this.$store.state.sidos;
     // },
@@ -56,8 +59,19 @@ export default {
     this.getSido();
   },
   methods: {
-    ...mapActions(["getSido", "getGugun", "getHouseList"]),
-    ...mapMutations(["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST"]),
+
+    ...mapActions(parkingStrore, [
+      "getSido",
+      "getGugun",
+      "getDong",
+      "getParkingList",
+    ]),
+    ...mapMutations(parkingStrore, [
+      "CLEAR_SIDO_LIST",
+      "CLEAR_GUGUN_LIST",
+      "CLEAR_DONG_LIST",
+    ]),
+
     // sidoList() {
     //   this.getSido();
     // },
@@ -67,8 +81,14 @@ export default {
       this.gugunCode = null;
       if (this.sidoCode) this.getGugun(this.sidoCode);
     },
-    searchApt() {
-      if (this.gugunCode) this.getHouseList(this.gugunCode);
+    dongList() {
+      console.log(this.gugunCode);
+      this.CLEAR_DONG_LIST();
+      if (this.gugunCode) this.getDong(this.gugunCode);
+    },
+    searchParking() {
+      console.log(this.dongCode);
+      if (this.dongCode) this.getParkingList(this.dongCode);
     },
   },
 };
