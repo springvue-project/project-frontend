@@ -55,11 +55,6 @@ const houseStore = "houseStore";
 export default {
   name: "HouseDetail",
   computed: {
-    // ...mapState(houseStore, ["house"]),
-    // house() {
-    //   return this.$store.state.house;
-    // },
-    //주석생성
     ...mapState(houseStore, ["housedeals"]),
   },
   filters: {

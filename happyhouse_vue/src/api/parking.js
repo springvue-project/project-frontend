@@ -1,7 +1,7 @@
 import { apiInstance, parkingInstance } from "./index.js";
 
 const api = apiInstance();
-const parking = houseInstance();
+const parking = parkingInstance();
 
 function sidoList(success, fail) {
   api
