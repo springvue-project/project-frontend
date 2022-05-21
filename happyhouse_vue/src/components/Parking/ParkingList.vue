@@ -1,11 +1,6 @@
 <template>
   <div class="wrapper">
     <div class="container">
-      <div class="center">
-        <parking-search-bar>
-          <span class="text-center" id="spantext"> </span>
-        </parking-search-bar>
-      </div>
       <div style="text-align: center">
         <br />설정한 주소 중심지의 반경 2km를 검색합니다.
       </div>
@@ -54,22 +49,26 @@
               <md-icon>info_outline</md-icon>
             </div>
             <b> 주차 공간 없음!! </b><br />
-            주차 공간이 없어요 ㅜ.ㅜ!
+            주차 공간이 없어요 ㅜ.ㅜ!!!!
           </div>
         </div>
       </div>
+      <parking-map />
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import ParkingMap from "@/components/Parking/ParkingMap.vue";
 
 const parkingStore = "parkingStore";
 
 export default {
   name: "ParkingList",
-  components: {},
+  components: {
+    ParkingMap,
+  },
   data() {
     return {};
   },

@@ -7,6 +7,7 @@ import MainFooter from "./layout/MainFooter.vue";
 import store from "@/store/index.js";
 
 //Parking Service
+//주석생성
 import Parking from "./views/Parking.vue";
 import ParkingList from "./components/Parking/ParkingList.vue";
 

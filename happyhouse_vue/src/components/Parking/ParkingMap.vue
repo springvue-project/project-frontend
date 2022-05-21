@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div style="display:none">{{ houseList }}</div>
     <div id="map" style="height:55vh;"></div>
   </div>
 </template>
@@ -8,15 +7,28 @@
 <script>
 import { mapState } from "vuex";
 
-const houseStore = "houseStore";
+const parkingStore = "parkingStore";
 
 export default {
-  name: "HouseMap",
+  name: "ParkingMap",
   data() {
     return {
       map: null,
       markers: [],
+      position: [],
     };
+  },
+  //받아오는 parkings(pakinglist)가 변경될때마다 마커 다시 생성
+  watch: {
+    ...mapState(parkingStore, ["parkings"]),
+    parkings: function() {
+      console.log("computed", this.parkings);
+
+      if (window.kakao) {
+        this.removeMarkers();
+        this.createMarkers();
+      }
+    },
   },
   mounted() {
     if (!window.kakao || !window.kakao.maps) {
@@ -29,22 +41,14 @@ export default {
         console.log("loaded");
       });
       document.head.appendChild(script);
+      console.log("djflaksjdf");
     } else {
       this.initMap();
       console.log("already load");
     }
   },
   computed: {
-    ...mapState(houseStore, ["houses"]),
-    houseList: function() {
-      console.log("computed", this.houses);
-
-      if (window.kakao) {
-        this.removeMarkers();
-        this.createMarkers();
-      }
-      return this.houses;
-    },
+    ...mapState(parkingStore, ["parkings"]),
   },
   methods: {
     initMap() {
@@ -59,12 +63,11 @@ export default {
       this.map = new kakao.maps.Map(container, options);
 
       // 기존 마커 제거
-      //주석생성
       this.removeMarkers();
       // 마커 생성
       this.createMarkers();
-      console.log("markers", this.markers);
     },
+    //마커 배열 돌면서 맵에서 마커 지우고, 마커배열 초기화
     removeMarkers() {
       if (this.markers != undefined) {
         if (this.markers.length > 0) {
@@ -73,15 +76,31 @@ export default {
       }
       this.markers = [];
     },
+    //마커 생성
     createMarkers() {
-      this.houses.forEach((house) =>
+      var bounds = new kakao.maps.LatLngBounds();
+
+      //받아온 parkings배열을 돌면서 markers배열에 추가
+      this.parkings.forEach((parking) => {
         this.markers.push(
           new kakao.maps.Marker({
             map: this.map,
-            position: new kakao.maps.LatLng(house.lat, house.lng),
+            position: new kakao.maps.LatLng(parking.lat, parking.lng),
           }),
         ),
-      );
+          //position배열에 따로 LatLang만 추가
+          this.position.push(new kakao.maps.LatLng(parking.lat, parking.lng));
+      });
+
+      //position배열의 LatLng를 bounds에 하나씩 확장시킴
+      for (var i = 0; i < this.position.length; i++) {
+        bounds.extend(this.position[i]);
+      }
+      //맵의 bounds설정
+      this.map.setBounds(bounds);
+      //positions배열 초기화
+      //초기화 안 하면 마커를 지운 자리까지 bounds로 인식해서 전국지도가 보임!!!!!!
+      this.position = [];
     },
   },
 };

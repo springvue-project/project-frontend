@@ -16,7 +16,6 @@
             </b-col>
           </b-row>
           <parking-list />
-          <!-- <house-map /> -->
         </div>
       </div>
     </div>
@@ -26,6 +25,7 @@
 <script>
 import ParkingSearchBar from "@/components/Parking/ParkingSearchBar.vue";
 import ParkingList from "@/components/Parking/ParkingList.vue";
+
 export default {
   components: {
     ParkingSearchBar,

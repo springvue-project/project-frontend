@@ -32,6 +32,7 @@ export default {
     // houses() {
     //   return this.$store.state.houses;
     // },
+    //주성생성
   },
 };
 </script>

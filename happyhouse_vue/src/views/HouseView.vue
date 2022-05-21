@@ -42,8 +42,8 @@
 <script>
 import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
 import HouseList from "@/components/house/HouseList.vue";
-import HouseDetail from "@/components/house/HouseDetail.vue";
 import HouseDetailList from "@/components/house/HouseDetailList.vue";
+
 import HouseMap from "@/components/house/HouseMap.vue";
 
 import { mapState } from "vuex";

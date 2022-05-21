@@ -98,6 +98,7 @@ export default {
       if (this.dongCode) this.getHouseList(this.dongCode);
     },
   },
+  //주석생성
 };
 </script>
 
