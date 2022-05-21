@@ -1,8 +1,8 @@
 <template>
-  <b-container v-if="house" class="bv-example-row">
+  <b-container v-if="house" class="container bv-example-row">
     <b-row>
       <b-col
-        ><h3>{{ house.아파트 }}</h3></b-col
+        ><h3>{{ house.apartmentName }}</h3></b-col
       >
     </b-row>
     <b-row class="mb-2 mt-1">
@@ -13,14 +13,14 @@
     <b-row>
       <b-col>
         <b-alert show variant="secondary"
-          >일련번호 : {{ house.일련번호 }}</b-alert
+          >일련번호 : {{ house.apartCode }}</b-alert
         >
       </b-col>
     </b-row>
     <b-row>
       <b-col>
         <b-alert show variant="primary"
-          >아파트 이름 : {{ house.아파트 }}
+          >아파트 이름 : {{ house.apartmentName }}
         </b-alert>
       </b-col>
     </b-row>
@@ -55,11 +55,12 @@ const houseStore = "houseStore";
 export default {
   name: "HouseDetail",
   computed: {
-    ...mapState(houseStore, ["house"]),
+    // ...mapState(houseStore, ["house"]),
     // house() {
     //   return this.$store.state.house;
     // },
     //주석생성
+    ...mapState(houseStore, ["housedeals"]),
   },
   filters: {
     price(value) {

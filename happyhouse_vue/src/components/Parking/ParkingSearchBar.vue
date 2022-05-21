@@ -45,7 +45,9 @@ export default {
     };
   },
   computed: {
+
     ...mapState(parkingStrore, ["sidos", "guguns", "dongs", "parkings"]),
+
     // sidos() {
     //   return this.$store.state.sidos;
     // },
@@ -57,6 +59,7 @@ export default {
     this.getSido();
   },
   methods: {
+
     ...mapActions(parkingStrore, [
       "getSido",
       "getGugun",
@@ -68,6 +71,7 @@ export default {
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
     ]),
+
     // sidoList() {
     //   this.getSido();
     // },
