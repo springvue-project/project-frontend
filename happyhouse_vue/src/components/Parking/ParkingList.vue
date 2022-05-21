@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
     <div class="container">
-      <div style="text-align: center">
+      <!-- <div style="text-align: center">
         <br />설정한 주소 중심지의 반경 2km를 검색합니다.
-      </div>
+      </div> -->
       <table class="table mt-2" v-if="parkings && parkings.length != 0">
         <colgroup>
           <col width="150" />
