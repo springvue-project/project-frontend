@@ -1,20 +1,16 @@
 <template>
   <b-row
-    class="m-2"
+    class="my-2"
     @click="selectHouse"
     @mouseover="colorChange(true)"
     @mouseout="colorChange(false)"
     :class="{ 'mouse-over-bgcolor': isColor }"
   >
-    <b-col cols="2" class="text-center align-self-center">
-      <b-img
-        thumbnail
-        src="https://picsum.photos/250/250/?image=58"
-        alt="Image 1"
-      ></b-img>
+    <b-col cols="2" class="text-center">
+      <i class="material-icons">home</i>
     </b-col>
     <b-col cols="10" class="align-self-center">
-      {{ house.aptName }}
+      {{ house.apartmentName }}
     </b-col>
   </b-row>
 </template>
@@ -33,6 +29,10 @@ export default {
   },
   props: {
     house: Object,
+    houseicon: {
+      type: String,
+      default: require("@/assets/img/iconhouse.jpg"),
+    },
   },
   methods: {
     ...mapActions(houseStore, ["detailHouse"]),
@@ -54,5 +54,8 @@ export default {
 }
 .mouse-over-bgcolor {
   background-color: lightblue;
+}
+.img-thumbnail {
+  border: white;
 }
 </style>
