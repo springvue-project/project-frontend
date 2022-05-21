@@ -44,6 +44,7 @@ const parkingStore = {
     // SET_DETAIL_HOUSE: (state, house) => {
     //   state.house = house;
     // },
+    //주석생성
   },
 
   actions: {

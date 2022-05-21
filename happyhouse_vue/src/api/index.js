@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_URL, APT_DEAL_URL } from "@/config";
+import { API_BASE_URL, APT_DEAL_URL, PARKING_URL } from "@/config";
 
 // axios 객체 생성
 function apiInstance() {

@@ -54,7 +54,7 @@
               <md-icon>info_outline</md-icon>
             </div>
             <b> 주차 공간 없음!! </b><br />
-            주차 공간이 없어요 ㅜ.ㅜ!
+            주차 공간이 없어요 ㅜ.ㅜ!!!!
           </div>
         </div>
       </div>
