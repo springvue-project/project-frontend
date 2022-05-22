@@ -45,7 +45,6 @@ export default {
     };
   },
   computed: {
-
     ...mapState(parkingStrore, ["sidos", "guguns", "dongs", "parkings"]),
 
     // sidos() {
@@ -59,7 +58,6 @@ export default {
     this.getSido();
   },
   methods: {
-
     ...mapActions(parkingStrore, [
       "getSido",
       "getGugun",

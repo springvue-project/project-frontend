@@ -38,4 +38,18 @@ function houseDealList(params, success, fail) {
     .catch(fail);
 }
 
-export { sidoList, gugunList, dongList, houseList, houseDealList };
+function aroundHouseList(params, success, fail) {
+  api
+    .get(`/map/aroundapt`, { params: params })
+    .then(success)
+    .catch(fail);
+}
+
+export {
+  sidoList,
+  gugunList,
+  dongList,
+  houseList,
+  houseDealList,
+  aroundHouseList,
+};

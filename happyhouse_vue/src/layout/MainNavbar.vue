@@ -60,6 +60,39 @@
                         class="md-button md-button-link md-white md-simple dropdown-toggle"
                         data-toggle="dropdown"
                       >
+                        <i class="material-icons">apps</i>
+                        <p>Service</p>
+                      </md-button>
+                      <ul class="dropdown-menu dropdown-with-icons">
+                        <li>
+                          <router-link to="/aroundapt"
+                            ><i class="material-icons">real_estate_agent</i>
+                            <p>Search Around</p></router-link
+                          >
+                        </li>
+                        <li>
+                          <router-link to="/parking">
+                            <i class="material-icons">directions_car</i>
+                            <p>Parking</p>
+                          </router-link>
+                        </li>
+                      </ul>
+                    </drop-down>
+                  </div>
+                </a>
+              </li>
+              <li class="md-list-item">
+                <a
+                  href="javascript:void(0)"
+                  class="md-list-item-router md-list-item-container md-button-clean dropdown"
+                >
+                  <div class="md-list-item-content">
+                    <drop-down direction="down">
+                      <md-button
+                        slot="title"
+                        class="md-button md-button-link md-white md-simple dropdown-toggle"
+                        data-toggle="dropdown"
+                      >
                         <i class="material-icons">account_box</i>
                         <p>User</p>
                       </md-button>
