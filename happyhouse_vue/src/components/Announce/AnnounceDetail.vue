@@ -52,9 +52,11 @@
 // import moment from "moment";
 import { getArticle, deleteArticle } from "@/api/announce";
 import { mapState } from "vuex";
+
 const userStore = "userStore";
 export default {
   name: "announcedetail",
+  components: {},
   data() {
     return {
       article: {},
