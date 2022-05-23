@@ -86,6 +86,9 @@
       </div>
       <br />
       <br />
+      <index-card />
+      <br />
+      <br />
       <div class="title">
         <h2>KaKao Map</h2>
         <h5 class="description">Show current location using KaKao Map API</h5>
@@ -100,11 +103,13 @@
 </template>
 
 <script>
+import IndexCard from "@/components/cards/IndexCard.vue";
 /* global kakao */
 import { Modal } from "@/components";
 export default {
   components: {
     Modal,
+    IndexCard,
   },
   data() {
     return {
