@@ -8,12 +8,11 @@
     </div>
   </div>
   <div v-else>
-    <b-alert show>주택 목록이 없습니다.</b-alert>
+    <b-alert show :v-bind="msg">{{ "아파트를 선택해주세요" }}</b-alert>
   </div>
 </template>
 
 <script>
-import HouseDetailListItem from "@/components/house/HouseDetailListItem.vue";
 import { mapState } from "vuex";
 
 const houseStore = "houseStore";
@@ -49,6 +48,7 @@ export default {
       ],
     };
   },
+  props: ["msg"],
   computed: {
     ...mapState(houseStore, ["housedeals"]),
     dealitems() {

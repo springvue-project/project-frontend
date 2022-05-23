@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div style="display:none">{{ houseList }}</div>
     <div id="map" style="height:55vh;"></div>
   </div>
 </template>
@@ -16,8 +15,19 @@ export default {
     return {
       map: null,
       markers: [],
+      bounds: [],
+      infoContent: null,
+      infoOverlay: [],
     };
   },
+  //props: {
+  //   aptimg: {
+  //     type: String,
+  //     default: require(`@/assets/img/apt/apt${Math.floor(
+  //       Math.random() * 2,
+  //     )}.png`),
+  //   },
+  // },
   mounted() {
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
@@ -35,15 +45,25 @@ export default {
     }
   },
   computed: {
-    ...mapState(houseStore, ["houses"]),
-    houseList: function() {
-      console.log("computed", this.houses);
+    ...mapState(houseStore, ["houses", "house"]),
+  },
+  watch: {
+    ...mapState(houseStore, ["houses", "house"]),
+    houses: function() {
+      console.log("watch", this.houses);
 
       if (window.kakao) {
-        this.removeMarkers();
-        this.createMarkers();
+        this.removeMarkers(this.markers);
+        this.createHouseMarkers(this.houses, this.markers);
+        this.setMarkers(this.markers);
+
+        this.setBounds(this.markers);
       }
       return this.houses;
+    },
+    house: function() {
+      this.closeOverlay();
+      this.createInfoOverlay(this.house);
     },
   },
   methods: {
@@ -59,32 +79,191 @@ export default {
       this.map = new kakao.maps.Map(container, options);
 
       // 기존 마커 제거
-      //주석생성
-      this.removeMarkers();
+
+      this.removeMarkers(this.markers);
+
       // 마커 생성
-      this.createMarkers();
-      console.log("markers", this.markers);
+      this.createHouseMarkers(this.houses, this.markers);
+      this.setMarkers(this.markers);
+      this.setBounds(this.markers);
     },
-    removeMarkers() {
-      if (this.markers != undefined) {
-        if (this.markers.length > 0) {
-          this.markers.forEach((marker) => marker.setMap(null));
+    removeMarkers(markers) {
+      if (markers != undefined) {
+        if (markers.length > 0) {
+          markers.forEach((marker) => marker.setMap(null));
         }
       }
-      this.markers = [];
+      markers = [];
     },
-    createMarkers() {
-      this.houses.forEach((house) =>
-        this.markers.push(
-          new kakao.maps.Marker({
-            map: this.map,
-            position: new kakao.maps.LatLng(house.lat, house.lng),
-          }),
-        ),
+    createHouseMarkers(houses, markers) {
+      houses.forEach((house) => {
+        var marker = new kakao.maps.Marker({
+          //map: this.map,
+          position: new kakao.maps.LatLng(house.lat, house.lng),
+          clickable: true,
+        });
+        markers.push(marker);
+        kakao.maps.event.addListener(marker, "click", () => {
+          console.log(house);
+          // 마커 위에 인포윈도우를 표시합니다
+          this.closeOverlay();
+          this.createInfoOverlay(house);
+        });
+      });
+    },
+
+    setMarkers(markers) {
+      markers.forEach((marker) => {
+        marker.setMap(this.map);
+      });
+    },
+    setBounds(markers) {
+      this.bounds = new kakao.maps.LatLngBounds();
+      markers.forEach((marker) => {
+        this.bounds.extend(marker.getPosition());
+      });
+      // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+      // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+      this.map.setBounds(this.bounds);
+    },
+    createInfoOverlay(house) {
+      var infoContent =
+        `<div class="mapwrap">` +
+        `    <div class="mapinfo">` +
+        `        <div class="title">` +
+        `            ${house.apartmentName}` +
+        `        </div>` +
+        `        <div class="body">` +
+        `            <div class="img">` +
+        `                <img src="${this.aptimg()}"  width="73" height="70">` +
+        `           </div>` +
+        `            <div class="desc">` +
+        `                <div class="ellipsis">법정동 : ${house.dong}</div>` +
+        `                <div class="ellipsis">건축년도 : ${house.buildYear}</div>` +
+        `            </div>` +
+        `        </div>` +
+        `    </div>` +
+        `</div>`;
+
+      this.infoOverlay.push(
+        new kakao.maps.CustomOverlay({
+          map: this.map,
+          position: new kakao.maps.LatLng(house.lat, house.lng),
+          content: infoContent,
+          xAnchor: 0.3,
+          yAnchor: 0.91,
+        }),
       );
+      this.map.panTo(new kakao.maps.LatLng(house.lat, house.lng));
+    },
+    closeOverlay() {
+      if (this.infoOverlay) {
+        this.infoOverlay.forEach((item) => {
+          item.setMap(null);
+        });
+      }
+    },
+    aptimg: function() {
+      return require(`@/assets/img/apt/apt.png`);
     },
   },
 };
 </script>
 
-<style></style>
+<style>
+.mapwrap {
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  width: 288px;
+  height: 132px;
+  margin-left: -144px;
+  overflow: hidden;
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+.mapwrap * {
+  padding: 0;
+  margin: 0;
+}
+.mapwrap .mapinfo {
+  /* width: 286px;
+  height: 120px; */
+  border-radius: 5px;
+  border-bottom: 2px solid #ccc;
+  border-right: 1px solid #ccc;
+  overflow: hidden;
+  background: #fff;
+}
+.mapwrap .mapinfo:nth-child(1) {
+  border: 0;
+  box-shadow: 0px 1px 2px #888;
+}
+.mapinfo .title {
+  font-size: 15px;
+  text-align: center;
+  margin: 0;
+  line-height: 2rem;
+  padding-top: 3px;
+  font-family: "Gothic", "Arial Narrow", Arial, sans-serif;
+}
+.mapinfo .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #888;
+  width: 17px;
+  height: 17px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png");
+}
+.mapinfo .close:hover {
+  cursor: pointer;
+}
+.mapinfo .body {
+  position: relative;
+  overflow: hidden;
+  margin: 0 10px;
+}
+.mapinfo .desc {
+  text-align: center;
+  position: relative;
+  margin: 13px 0 0 100px;
+  height: 75px;
+}
+.desc .ellipsis {
+  font-size: 10px!;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.desc .jibun {
+  font-size: 11px;
+  color: #888;
+  margin-top: -2px;
+}
+.mapinfo .img {
+  position: absolute;
+  margin: 0 10px;
+  top: 6px;
+  left: 5px;
+  width: 73px;
+  height: 71px;
+  color: #888;
+  overflow: hidden;
+  text-align: center;
+}
+.mapinfo:after {
+  content: "";
+  position: absolute;
+  margin-left: -12px;
+  left: 50%;
+  bottom: 0;
+  width: 22px;
+  height: 12px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+}
+.mapinfo .link {
+  color: #5085bb;
+}
+</style>

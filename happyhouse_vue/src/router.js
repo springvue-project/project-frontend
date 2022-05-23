@@ -31,6 +31,9 @@ import UserView from "@/views/UserView.vue";
 import UserLogin from "@/components/User/UserLogin.vue";
 import UserRegist from "@/components/User/UserRegist.vue";
 import UserProfile from "@/components/User/UserProfile.vue";
+//AroundApt
+import AroundApt from "@/views/AroundApt.vue";
+
 Vue.use(Router);
 
 // https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
@@ -71,6 +74,15 @@ export default new Router({
           component: ParkingList,
         },
       ],
+    },
+    {
+      path: "/aroundapt",
+      name: "aroundapt",
+      components: {
+        default: AroundApt,
+        header: MainNavbar,
+        footer: MainFooter,
+      },
     },
     {
       path: "/house",
