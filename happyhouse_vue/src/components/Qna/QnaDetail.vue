@@ -43,8 +43,8 @@
         </b-col>
       </b-row>
       <h5 style="margin-top: 15px">Comment</h5>
-      <comment-input />
       <comment-list style="margin-top: 1em" />
+      <comment-input />
     </b-container>
   </div>
 </template>

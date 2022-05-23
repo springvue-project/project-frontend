@@ -30,24 +30,6 @@
                   <p>House</p>
                 </router-link>
               </md-list-item>
-              <md-list-item
-                ><router-link to="/announce">
-                  <i class="material-icons">content_paste</i>
-                  <p>Announcement</p>
-                </router-link>
-              </md-list-item>
-              <md-list-item>
-                <router-link to="/qna">
-                  <i class="material-icons">question_answer</i>
-                  <p>QnA</p>
-                </router-link>
-              </md-list-item>
-              <md-list-item>
-                <router-link to="/parking">
-                  <i class="material-icons">directions_car</i>
-                  <p>Parking</p>
-                </router-link>
-              </md-list-item>
               <li class="md-list-item">
                 <a
                   href="javascript:void(0)"
@@ -81,6 +63,19 @@
                   </div>
                 </a>
               </li>
+              <md-list-item
+                ><router-link to="/announce">
+                  <i class="material-icons">content_paste</i>
+                  <p>Announcement</p>
+                </router-link>
+              </md-list-item>
+              <md-list-item>
+                <router-link to="/qna">
+                  <i class="material-icons">question_answer</i>
+                  <p>QnA</p>
+                </router-link>
+              </md-list-item>
+
               <li class="md-list-item">
                 <a
                   href="javascript:void(0)"

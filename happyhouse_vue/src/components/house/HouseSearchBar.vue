@@ -104,6 +104,7 @@ export default {
 
 <style lang="css" scoped>
 select {
+  line-height: 1rem;
   padding: 10px;
   border-top-color: white;
   border-right-color: white;

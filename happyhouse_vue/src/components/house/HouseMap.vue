@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="map" style="height:55vh;"></div>
+    <div id="map" style="height:60vh;"></div>
   </div>
 </template>
 
@@ -36,16 +36,19 @@ export default {
       script.addEventListener("load", () => {
         console.log("kakao", kakao);
         kakao.maps.load(this.initMap);
+        this.removeMarkers(this.markers);
         console.log("loaded");
       });
       document.head.appendChild(script);
     } else {
       this.initMap();
+      this.removeMarkers(this.markers);
+
       console.log("already load");
     }
   },
   computed: {
-    ...mapState(houseStore, ["houses", "house"]),
+    ...mapState(houseStore, ["houses", "house", "housedeals"]),
   },
   watch: {
     ...mapState(houseStore, ["houses", "house"]),
@@ -54,6 +57,7 @@ export default {
 
       if (window.kakao) {
         this.removeMarkers(this.markers);
+
         this.createHouseMarkers(this.houses, this.markers);
         this.setMarkers(this.markers);
 
@@ -79,9 +83,7 @@ export default {
       this.map = new kakao.maps.Map(container, options);
 
       // 기존 마커 제거
-
       this.removeMarkers(this.markers);
-
       // 마커 생성
       this.createHouseMarkers(this.houses, this.markers);
       this.setMarkers(this.markers);
@@ -90,10 +92,12 @@ export default {
     removeMarkers(markers) {
       if (markers != undefined) {
         if (markers.length > 0) {
-          markers.forEach((marker) => marker.setMap(null));
+          markers.forEach((marker) => {
+            marker.setMap(null);
+          });
+          this.markers = [];
         }
       }
-      markers = [];
     },
     createHouseMarkers(houses, markers) {
       houses.forEach((house) => {
@@ -102,20 +106,23 @@ export default {
           position: new kakao.maps.LatLng(house.lat, house.lng),
           clickable: true,
         });
-        markers.push(marker);
+
         kakao.maps.event.addListener(marker, "click", () => {
-          console.log(house);
+          console.log("addListener", house);
           // 마커 위에 인포윈도우를 표시합니다
           this.closeOverlay();
           this.createInfoOverlay(house);
         });
+        markers.push(marker);
       });
     },
 
     setMarkers(markers) {
-      markers.forEach((marker) => {
-        marker.setMap(this.map);
-      });
+      if (markers != null && markers.length > 0) {
+        markers.forEach((marker) => {
+          marker.setMap(this.map);
+        });
+      }
     },
     setBounds(markers) {
       this.bounds = new kakao.maps.LatLngBounds();
@@ -135,13 +142,13 @@ export default {
         `        </div>` +
         `        <div class="body">` +
         `            <div class="img">` +
-        `                <img src="${this.aptimg()}"  width="73" height="70">` +
+        `                <img src="${this.aptimg()}"  >` +
         `           </div>` +
-        `            <div class="desc">` +
-        `                <div class="ellipsis">법정동 : ${house.dong}</div>` +
-        `                <div class="ellipsis">건축년도 : ${house.buildYear}</div>` +
-        `            </div>` +
         `        </div>` +
+        `            <div class="desc">` +
+        `                <div class="ellipsis">건축년도 : ${house.buildYear}</div>` +
+        `<div><a href="https://search.naver.com/search.naver?where=nexearch&sm=tab_jum&query=${house.dong}${house.apartmentName}" target="_blank" class="link">네이버 검색</a></div>` +
+        `            </div>` +
         `    </div>` +
         `</div>`;
 
@@ -154,6 +161,7 @@ export default {
           yAnchor: 0.91,
         }),
       );
+      console.log("addListener", house);
       this.map.panTo(new kakao.maps.LatLng(house.lat, house.lng));
     },
     closeOverlay() {
@@ -176,7 +184,7 @@ export default {
   left: 0;
   bottom: 40px;
   width: 288px;
-  height: 132px;
+  height: 238px;
   margin-left: -144px;
   overflow: hidden;
   font-size: 12px;
@@ -190,6 +198,7 @@ export default {
 .mapwrap .mapinfo {
   /* width: 286px;
   height: 120px; */
+  height: 96%;
   border-radius: 5px;
   border-bottom: 2px solid #ccc;
   border-right: 1px solid #ccc;
@@ -224,12 +233,12 @@ export default {
   position: relative;
   overflow: hidden;
   margin: 0 10px;
+  height: 65%;
 }
 .mapinfo .desc {
   text-align: center;
   position: relative;
-  margin: 13px 0 0 100px;
-  height: 75px;
+  margin-top: 6px;
 }
 .desc .ellipsis {
   font-size: 10px!;
@@ -246,9 +255,7 @@ export default {
   position: absolute;
   margin: 0 10px;
   top: 6px;
-  left: 5px;
-  width: 73px;
-  height: 71px;
+  height: 100%;
   color: #888;
   overflow: hidden;
   text-align: center;
