@@ -31,14 +31,14 @@ export default {
     ParkingSearchBar,
     ParkingList,
   },
-  bodyClass: "login-page",
+  bodyClass: "index-page",
   data() {
     return {};
   },
   props: {
     header: {
       type: String,
-      default: require("@/assets/img/HappyApart.jpg"),
+      default: require("@/assets/img/ParkingSearch.jpg"),
     },
   },
   computed: {

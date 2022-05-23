@@ -8,31 +8,29 @@
       <nav>
         <ul>
           <li>
-            <a href="https://www.creative-tim.com">
-              Creative Tim
+            <a href="https://github.com/springvue-project">
+              Team GitHub
             </a>
           </li>
           <li>
-            <a href="https:///presentation.creative-tim.com">
-              About Us
+            <a href="https://github.com/yeonui-0626">
+              About yeonui
             </a>
           </li>
           <li>
-            <a href="https:///blog.creative-tim.com">
-              Blog
+            <a href="https://github.com/jeong-chan">
+              About chanwoo
             </a>
           </li>
           <li>
-            <a href="https://www.creative-tim.com/license">
-              Licenses
+            <a href="https://www.ssafy.com/ksp/jsp/swp/swpMain.jsp">
+              SSAFY
             </a>
           </li>
         </ul>
       </nav>
       <div class="copyright">
-        &copy; {{ year }}, made with <md-icon>favorite</md-icon> by
-        <a href="https://www.creative-tim.com/" target="_blank">Creative Tim</a>
-        for a better web.
+        &copy; {{ year }}, made by BUK_class_4_yeonui_chanwoo.
       </div>
     </div>
   </footer>

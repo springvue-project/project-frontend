@@ -46,7 +46,7 @@ export default {
   props: {
     header: {
       type: String,
-      default: require("@/assets/img/HappyApart.jpg"),
+      default: require("@/assets/img/HouseArround.jpg"),
     },
   },
   computed: {

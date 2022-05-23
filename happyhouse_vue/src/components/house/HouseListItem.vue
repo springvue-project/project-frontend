@@ -56,7 +56,6 @@ export default {
     ...mapActions(storeStore, ["getStoreList", "cleanStoreList"]),
     ...mapActions(houseStore, ["detailHouse"]),
     selectHouse() {
-
       //console.log("listRow : ", this.house);
       // this.$store.dispatch("getHouse", this.house);
       //주석생성

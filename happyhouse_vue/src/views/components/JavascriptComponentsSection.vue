@@ -3,113 +3,51 @@
     <div id="javascriptComponents">
       <div class="md-layout">
         <div class="md-layout-item md-small-size-100">
-          <div class="title" style="text-align: center">
-            <h3>Summary</h3>
+          <!-- 서비스 Card 배치 -->
+          <div class="title" style="margin-top:3em">
+            <h2>대표 기능</h2>
           </div>
-          <div style="text-align: center">
-            위 프로젝트는 카카오 맵 API와 공공 API를 이용하여 사용자에게 필요한
-            정보와 서비스를 제공해준다.<br />
 
-            다음과 같은 기능들을 제공한다.
+          <index-service-cards style="margin-top:1em" />
+
+          <!-- 최근 공지사항 && 자주하는 질문 -->
+          <div class="title">
+            <h2>게시판</h2>
           </div>
-          <md-button
-            class="md-success md-block md-simple"
-            @click="classicModal = true"
-            ><md-icon>library_books</md-icon> Click</md-button
-          >
+          <index-card />
+
+          <!-- Kakao Map -->
+          <div class="title" style="margin-top:3em">
+            <h2>KaKao Map</h2>
+            <h5 class="description">
+              Show current location using KaKao Map API
+            </h5>
+          </div>
           <div class="md-layout">
-            <div class="md-layout-item md-size-33">
-              <div class="row text-center"></div>
-              <modal v-if="classicModal" @close="classicModalHide">
-                <template slot="header">
-                  <h4 class="modal-title">Fuction</h4>
-                  <md-button
-                    class="md-simple md-just-icon md-round modal-default-button"
-                    @click="classicModalHide"
-                  >
-                    <md-icon>clear</md-icon>
-                  </md-button>
-                </template>
-
-                <template slot="body">
-                  <ul class="list-group">
-                    <li class="list-group-item">
-                      <div>House Detail Searching Service</div>
-                      <span class="badge badge-primary">New</span>
-                    </li>
-                    <li class="list-group-item">
-                      <div>QnA Board (fuc. CRUD)</div>
-                      <span class="badge badge-primary">New</span>
-                    </li>
-                    <li class="list-group-item">
-                      <div>User Services (ex. Login, Join, Profile)</div>
-                      <span class="badge badge-primary">New</span>
-                    </li>
-                  </ul>
-                </template>
-
-                <template slot="footer">
-                  <md-button
-                    class="md-danger md-simple"
-                    @click="classicModalHide"
-                    >Close</md-button
-                  >
-                </template>
-              </modal>
+            <div class="md-layout-item md-size-66 mx-auto md-small-size-100">
+              <div id="map" style="width:800px;height:400px;"></div>
             </div>
           </div>
-          <br />
-          <br />
-          <div class="md-layout-item md-small-size-100">
-            <ul class="list-group">
-              <li class="list-group-item">
-                <router-link to="/parking/list">
-                  <md-button class="md-primary md-wd">
-                    <h5>Go to Parking Area Service</h5>
-                  </md-button>
-                </router-link>
-                <router-link to="/qna/qnalist">
-                  <md-button class="md-primary md-wd">
-                    <h5>Go to QnA Board</h5>
-                  </md-button>
-                </router-link>
+        </div>
+      </div>
+      <br />
+      <br />
 
-                <router-link to="/house">
-                  <md-button class="md-primary md-wd">
-                    <h5>Go to House Detail Service</h5>
-                  </md-button>
-                </router-link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
       <br />
       <br />
-      <index-card />
-      <br />
-      <br />
-      <div class="title">
-        <h2>KaKao Map</h2>
-        <h5 class="description">Show current location using KaKao Map API</h5>
-      </div>
-      <div class="md-layout">
-        <div class="md-layout-item md-size-66 mx-auto md-small-size-100">
-          <div id="map" style="width:800px;height:400px;"></div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
 import IndexCard from "@/components/cards/IndexCard.vue";
+import IndexServiceCards from "@/components/Index/Card/IndexServiceCards.vue";
+
 /* global kakao */
-import { Modal } from "@/components";
 export default {
   components: {
-    Modal,
     IndexCard,
+    IndexServiceCards,
   },
   data() {
     return {

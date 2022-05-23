@@ -13,18 +13,14 @@ import storeStore from "@/store/modules/storeStore.js";
 
 import commentStore from "@/store/modules/commentStore.js";
 
-
 const store = new Vuex.Store({
   modules: {
     userStore,
     qnaStore,
     houseStore,
     parkingStore,
-
     storeStore,
-
     commentStore,
-
   },
   plugins: [
     createPersistedState({
