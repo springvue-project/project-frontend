@@ -54,16 +54,7 @@
 <script>
 import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
 import HouseList from "@/components/house/HouseList.vue";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import HouseDetail from "@/components/house/HouseDetail.vue";
 import HouseDetailList from "@/components/house/HouseDetailList.vue";
->>>>>>> d622004e70bbf90ec4f353d042237d8f9b4e09bc
-=======
-import HouseDetailList from "@/components/house/HouseDetailList.vue";
-
->>>>>>> db97eb51ad3e11772874dcc919f8133786fffb43
 import HouseMap from "@/components/house/HouseMap.vue";
 
 import { mapState } from "vuex";
