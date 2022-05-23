@@ -51,4 +51,19 @@ export default {
 };
 </script>
 
-<style lang="css"></style>
+<style lang="css">
+.underline-steelblue {
+  color: azure;
+  font-size: 5rem;
+  font-weight: 600;
+  display: inline-block;
+  position: relative;
+  line-height: 1.15em;
+  text-shadow: 0px 15px 102.86px rgb(0 0 0 / 70%),
+    0px 15px 40.02px rgb(0 0 0 / 21%);
+  text-align: center;
+}
+.img-bg-white {
+  background-color: white;
+}
+</style>
