@@ -9,6 +9,13 @@ function listArticle(param, success, fail) {
     .catch(fail);
 }
 
+function listtopArticle(param, success, fail) {
+  api
+    .get(`/qna/top`, { params: param })
+    .then(success)
+    .catch(fail);
+}
+
 function writeArticle(article, success, fail) {
   api
     .post(`/qna`, JSON.stringify(article))
@@ -37,4 +44,11 @@ function deleteArticle(articleno, success, fail) {
     .catch(fail);
 }
 
-export { listArticle, writeArticle, getArticle, modifyArticle, deleteArticle };
+export {
+  listArticle,
+  writeArticle,
+  getArticle,
+  modifyArticle,
+  deleteArticle,
+  listtopArticle,
+};

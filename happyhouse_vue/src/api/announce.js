@@ -9,6 +9,13 @@ function listArticle(param, success, fail) {
     .catch(fail);
 }
 
+function listlastArticle(param, success, fail) {
+  api
+    .get(`/announce/last`, { params: param })
+    .then(success)
+    .catch(fail);
+}
+
 function writeArticle(article, success, fail) {
   api
     .post(`/announce`, JSON.stringify(article))
@@ -37,4 +44,11 @@ function deleteArticle(no, success, fail) {
     .catch(fail);
 }
 
-export { listArticle, writeArticle, getArticle, modifyArticle, deleteArticle };
+export {
+  listArticle,
+  writeArticle,
+  getArticle,
+  modifyArticle,
+  deleteArticle,
+  listlastArticle,
+};
