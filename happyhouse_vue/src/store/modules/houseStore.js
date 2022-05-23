@@ -16,6 +16,7 @@ const houseStore = {
     houses: [],
     house: null,
     housedeals: [],
+    searchType: null,
   },
 
   getters: {},
@@ -169,6 +170,9 @@ const houseStore = {
       const params = {
         aptCode: aptCode,
       };
+    },
+    resetHouseDealList: ({ commit }) => {
+      commit("CLEAR_HOUSEDEAL_LIST");
     },
   },
 };

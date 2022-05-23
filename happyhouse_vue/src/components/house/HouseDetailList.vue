@@ -1,8 +1,5 @@
 <template>
   <div v-if="housedeals && housedeals.length != 0">
-    <h3 ref="deallist">House Deal Info</h3>
-    <p>선택하신 아파트의 거래 내역 입니다.</p>
-    <hr class="my-2" />
     <div class="table-div">
       <b-table striped hover :fields="fields" :items="dealitems"></b-table>
     </div>

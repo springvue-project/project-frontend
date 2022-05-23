@@ -1,31 +1,12 @@
 <template>
-  <div>
-    <div class="mt-5" :class="{ 'map-div': this.stores.length == 0 }">
-      <div class="mt-3">
-        <h3>Store List</h3>
-        <p>선택하신 아파트 주변의 {{ type }} 정보입니다.</p>
-        <hr class="my-2" />
-      </div>
-      <div>
-        <div id="storemap" style="height:55vh;"></div>
-      </div>
-    </div>
-    <div class="mt-5" v-if="this.stores.length == 0">
-      <div class="alert alert-warning">
-        <div class="container">
-          <div class="alert-icon">
-            <md-icon>warning</md-icon>
-          </div>
-          <b class="msg"> {{ type }} 정보가 없습니다. </b>
-        </div>
-      </div>
-    </div>
+  <div class="mt-5">
+    <div id="storemap" style="height:60vh;"></div>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
-
+import axios from "axios";
 const storeStore = "storeStore";
 //
 export default {
@@ -36,6 +17,7 @@ export default {
       bounds: [],
       infoContent: null,
       infoOverlay: [],
+      detailStore: null,
     };
   },
 
@@ -74,9 +56,8 @@ export default {
       return this.stores;
     },
     store: function() {
-      console.log("watch store");
       this.closeOverlay();
-      this.createInfoOverlay(this.stores);
+      this.createInfoOverlay(this.store);
     },
   },
   methods: {
@@ -94,11 +75,9 @@ export default {
       // 기존 마커 제거
       this.removeMarkers(this.markers);
       // 마커 생성
-      //this.createMarkers();
-      //this.setMarkers();
-      //this.setBounds();
-      console.log("markers", this.markers);
-      console.log("stores", this.stores.length);
+      this.createStoreMarkers(this.stores, this.markers);
+      this.setMarkers(this.markers);
+      this.setBounds(this.markers);
     },
     removeMarkers(markers) {
       if (markers != undefined) {
@@ -106,7 +85,7 @@ export default {
           markers.forEach((marker) => marker.setMap(null));
         }
       }
-      markers = [];
+      this.markers = [];
     },
 
     createStoreMarkers(stores, markers) {
@@ -148,24 +127,27 @@ export default {
         `            ${store.storeName}` +
         `        </div>` +
         `        <div class="body">` +
+        `            <div class="img">` +
+        `                <img src="${this.aptimg()}"  >` +
+        `           </div>` +
+        `        </div>` +
         `            <div class="desc">` +
         `                <div class="ellipsis">주소 : ${store.address}</div>` +
-        `                <div class="ellipsis">검색</div>` +
+        `                <div><a href="https://search.naver.com/search.naver?where=nexearch&sm=tab_jum&query=${store.storeName}" target="_blank" class="link">네이버 검색</a></div>` +
         `            </div>` +
-        `        </div>` +
         `    </div>` +
         `</div>`;
 
       this.infoOverlay.push(
         new kakao.maps.CustomOverlay({
           map: this.map,
-          position: new kakao.maps.LatLng(house.lat, house.lng),
+          position: new kakao.maps.LatLng(store.lat, store.lng),
           content: infoContent,
           xAnchor: 0.3,
           yAnchor: 0.91,
         }),
       );
-      this.map.panTo(new kakao.maps.LatLng(house.lat, house.lng));
+      this.map.panTo(new kakao.maps.LatLng(store.lat, store.lng));
     },
     closeOverlay() {
       if (this.infoOverlay) {
@@ -174,11 +156,31 @@ export default {
         });
       }
     },
+    searchDetailStore(storeName) {
+      axios
+        .get(
+          `https://dapi.kakao.com/v2/search/web?query=${storeName}&size=10`,
+          {
+            headers: {
+              Authorization: "KakaoAK 70782a7f3313315f56bf97484f6ed8b1",
+            },
+          },
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    aptimg: function() {
+      return require(`@/assets/img/apt/apt.png`);
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
 .mapwrap {
   position: absolute;
   left: 0;
@@ -236,7 +238,7 @@ export default {
 .mapinfo .desc {
   text-align: center;
   position: relative;
-  margin: 13px 0 0 100px;
+  margin: 13px 0 0 0px;
   height: 75px;
 }
 .desc .ellipsis {

@@ -11,29 +11,36 @@
       </div>
     </b-col>
     <b-col cols="1" class="icon-div align-self-center">
-      <i @click="selectHouse" class="store-icon material-icons">home</i>
+      <a> <i @click="selectHouse" class="store-icon material-icons">home</i></a>
     </b-col>
     <b-col cols="1" class="icon-div align-self-center">
-      <i @click="searchGas" class="store-icon material-icons"
-        >local_gas_station</i
+      <a href="#storeList">
+        <i @click="searchGas" class="store-icon material-icons"
+          >local_gas_station</i
+        ></a
       >
     </b-col>
     <b-col cols="1" class="icon-div align-self-center">
-      <i @click="searchEstate" class="store-icon material-icons"
-        >real_estate_agent</i
+      <a href="#storeList"
+        ><i @click="searchEstate" class="store-icon material-icons"
+          >real_estate_agent</i
+        ></a
       >
     </b-col>
     <b-col cols="1" class="icon-div align-self-center">
-      <i @click="searchCafe" class="store-icon material-icons">local_cafe</i>
+      <a href="#storeList">
+        <i @click="searchCafe" class="store-icon material-icons"
+          >local_cafe</i
+        ></a
+      >
     </b-col>
-    <b-col cols="1" class="icon-div align-self-center">
-      <i class="store-icon material-icons">favorite_border</i>
-    </b-col>
+
+    <b-col cols="1" class="icon-div align-self-center"> </b-col>
   </b-row>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 const houseStore = "houseStore";
 const storeStore = "storeStore";
@@ -53,7 +60,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions(storeStore, ["getStoreList", "cleanStoreList"]),
+    ...mapActions(storeStore, [
+      "getStoreList",
+      "cleanStoreList",
+      "showStoreList",
+    ]),
     ...mapActions(houseStore, ["detailHouse"]),
     selectHouse() {
       //console.log("listRow : ", this.house);
@@ -70,7 +81,8 @@ export default {
         code: "L",
         distance: 0.5,
       };
-      this.cleanStoreList();
+      this.showStoreList();
+      //this.cleanStoreList();
       this.getStoreList(param);
     },
     searchCafe() {
@@ -81,7 +93,8 @@ export default {
         code: "Q12",
         distance: 0.5,
       };
-      this.cleanStoreList();
+      this.showStoreList();
+      //this.cleanStoreList();
       this.getStoreList(param);
     },
     searchGas() {
@@ -92,7 +105,8 @@ export default {
         code: "F16",
         distance: 0.5,
       };
-      this.cleanStoreList();
+      this.showStoreList();
+      //this.cleanStoreList();
       this.getStoreList(param);
     },
     colorChange(flag) {

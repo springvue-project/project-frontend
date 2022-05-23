@@ -26,24 +26,51 @@
           </b-row>
           <b-row class="mb-5">
             <b-col
-              cols="4"
+              cols="5"
               align="left"
-              style="height:500px; overflow:scroll; overflow-x:hidden"
+              style="height:550px; overflow:scroll; overflow-x:hidden"
               class="scroll"
             >
               <house-list />
             </b-col>
-            <b-col cols="8">
+            <b-col cols="7">
               <house-map />
+            </b-col>
+          </b-row>
+          <b-row v-if="this.housedeals && this.housedeals.length != 0">
+            <b-col cols="12">
+              <h3 ref="deallist">House Deal Info</h3>
+              <p>선택하신 아파트의 거래 내역 입니다.</p>
+              <hr class="my-2" />
             </b-col>
           </b-row>
           <b-row v-if="this.housedeals && this.housedeals.length != 0">
             <b-col
               cols="12"
-              style="height:600px; overflow:scroll; overflow-x:hidden"
+              style="height:550px; overflow:scroll; overflow-x:hidden"
               class="scroll"
             >
               <house-detail-list />
+            </b-col>
+          </b-row>
+
+          <b-row v-if="this.housedeals && this.showStore">
+            <b-col cols="12" class="mt-5">
+              <h3>Store List</h3>
+              <p>선택하신 아파트 주변의 {{ type }} 정보입니다.</p>
+              <hr class="my-2" />
+            </b-col>
+          </b-row>
+          <b-row v-if="this.showStore">
+            <b-col
+              cols="5"
+              style="height:600px; overflow:scroll; overflow-x:hidden"
+              class="scroll"
+            >
+              <store-list />
+            </b-col>
+            <b-col cols="7">
+              <store-map />
             </b-col>
           </b-row>
         </div>
@@ -56,9 +83,14 @@ import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
 import HouseList from "@/components/house/HouseList.vue";
 import HouseDetailList from "@/components/house/HouseDetailList.vue";
 import HouseMap from "@/components/house/HouseMap.vue";
+import StoreMap from "@/components/Store/StoreMap.vue";
+import StoreList from "@/components/Store/StoreList.vue";
 
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
+
 const houseStore = "houseStore";
+const storeStore = "storeStore";
+
 export default {
   name: "HouseView",
   bodyClass: "index-page",
@@ -67,6 +99,8 @@ export default {
     HouseDetailList,
     HouseList,
     HouseMap,
+    StoreMap,
+    StoreList,
   },
   props: {
     header: {
@@ -79,12 +113,14 @@ export default {
   },
   computed: {
     ...mapState(houseStore, ["housedeals"]),
+    ...mapState(storeStore, ["showStore", "type"]),
     headerStyle() {
       return {
         backgroundImage: `url(${this.header})`,
       };
     },
   },
+  watch: {},
 };
 </script>
 <style lang="scss" scoped>

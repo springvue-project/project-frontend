@@ -24,4 +24,7 @@
   width: 0;
   height: 0;
 }
+html {
+  scroll-behavior: smooth;
+}
 </style>

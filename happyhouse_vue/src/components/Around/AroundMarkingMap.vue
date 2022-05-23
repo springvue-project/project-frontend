@@ -10,7 +10,7 @@
         <i class="material-icons rm-icon" @click="removeAddr(index)">close</i>
       </div>
     </b-row>
-    <div id="markmap" style="height:55vh;"></div>
+    <div id="markmap" style="height:60vh;"></div>
     <b-row>
       <md-button
         class="search-btn md-success md-block mt-3 my-3"
@@ -19,7 +19,7 @@
       >
     </b-row>
     <b-row v-if="showDetail">
-      <b-col cols="12" class="mt-3">
+      <b-col cols="12" class="mt-5">
         <h3>House List</h3>
         <p>
           중심 지점을 기준으로 반경 1km 이내 아파트 정보를 입니다.
@@ -43,8 +43,22 @@
         <house-detail-list />
       </b-col>
     </b-row>
-    <b-row v-if="showDetail">
-      <b-col cols="12">
+    <b-row v-if="showDetail && this.showStore">
+      <b-col cols="12" class="mt-5">
+        <h3 id="storeList">Store List</h3>
+        <p>선택하신 아파트 주변의 {{ type }} 정보입니다.</p>
+        <hr class="my-2" />
+      </b-col>
+    </b-row>
+    <b-row v-if="showDetail && this.showStore">
+      <b-col
+        cols="5"
+        style="height:500px; overflow:scroll; overflow-x:hidden"
+        class="scroll"
+      >
+        <store-list />
+      </b-col>
+      <b-col cols="7">
         <store-map />
       </b-col>
     </b-row>
@@ -54,7 +68,8 @@
 <script>
 import HouseList from "@/components/house/HouseList.vue";
 import HouseDetailList from "../house/HouseDetailList.vue";
-import StoreMap from "@/components/Map/StoreMap.vue";
+import StoreMap from "@/components/Store/StoreMap.vue";
+import StoreList from "@/components/Store/StoreList.vue";
 
 import { mapState, mapActions } from "vuex";
 
@@ -63,7 +78,7 @@ const storeStore = "storeStore";
 
 export default {
   name: "AroudMarkingMap",
-  components: { HouseList, HouseDetailList, StoreMap },
+  components: { HouseList, HouseDetailList, StoreMap, StoreList },
   data() {
     return {
       map: null,
@@ -81,7 +96,23 @@ export default {
       searchType: true,
     };
   },
+  created() {
+    if (!("geolocation" in navigator)) {
+      this.message = "Geolocation is not available.";
+      return;
+    }
+    this.message = "Locating...";
 
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        this.lat = pos.coords.latitude;
+        this.lng = pos.coords.longitude;
+      },
+      (err) => {
+        this.message = "현재 위치를 찾을 수 없습니다.";
+      },
+    );
+  },
   mounted() {
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
@@ -89,23 +120,23 @@ export default {
       /* global kakao */
       script.addEventListener("load", () => {
         console.log("kakao", kakao);
-        this.getGeolocation();
         kakao.maps.load(this.initMap);
         console.log("loaded");
       });
       document.head.appendChild(script);
     } else {
-      //this.getGeolocation();
+      this.getGeolocation();
       this.initMap();
       console.log("already load");
     }
   },
   computed: {
     ...mapState(houseStore, ["houses", "house"]),
+    ...mapState(storeStore, ["showStore", "closeStore", "type"]),
   },
   watch: {
     ...mapState(houseStore, ["houses", "house"]),
-
+    ...mapState(storeStore, ["showStore", "closeStore", "type"]),
     mouseLntLng: function() {
       this.setMarkers(this.markers);
     },
@@ -114,6 +145,7 @@ export default {
 
       if (window.kakao) {
         this.removeMarkers(this.housemarkers);
+        this.housemarkers = [];
         this.createHouseMarkers(this.houses, this.housemarkers);
         this.setMarkers(this.housemarkers);
 
@@ -131,6 +163,7 @@ export default {
   },
   methods: {
     ...mapActions(houseStore, ["getAroundHouseList"]),
+    ...mapActions(storeStore, ["cleanStoreList"]),
     removeAddr(index) {
       console.log(index);
       this.markers[index].setMap(null);
@@ -155,6 +188,15 @@ export default {
       );
     },
     initMap() {
+      if (
+        this.lat == null ||
+        this.lat == "" ||
+        this.lng == null ||
+        this.lng == ""
+      ) {
+        this.lat = 35.17975775456898;
+        this.lng = 129.07493663532324;
+      }
       this.geocoder = new kakao.maps.services.Geocoder();
 
       const container = document.getElementById("markmap");
@@ -218,7 +260,6 @@ export default {
           markers.forEach((marker) => marker.setMap(null));
         }
       }
-      markers = [];
     },
     createHouseMarkers(houses, markers) {
       houses.forEach((house) => {
@@ -259,13 +300,13 @@ export default {
         `        </div>` +
         `        <div class="body">` +
         `            <div class="img">` +
-        `                <img src="${this.aptimg()}"  width="73" height="70">` +
+        `                <img src="${this.aptimg()}">` +
         `           </div>` +
+        `        </div>` +
         `            <div class="desc">` +
         `                <div class="ellipsis">법정동 : ${house.dong}</div>` +
         `                <div class="ellipsis">건축년도 : ${house.buildYear}</div>` +
         `            </div>` +
-        `        </div>` +
         `    </div>` +
         `</div>`;
 
@@ -278,6 +319,7 @@ export default {
           yAnchor: 0.91,
         }),
       );
+
       this.map.panTo(new kakao.maps.LatLng(house.lat, house.lng));
     },
     closeOverlay() {
@@ -311,13 +353,108 @@ export default {
         lat: avgLat,
         lng: avgLng,
       };
+
       this.getAroundHouseList(latlng);
+      this.cleanStoreList();
     },
   },
 };
 </script>
 
 <style scoped>
+.mapwrap {
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  width: 288px;
+  height: 210px;
+  margin-left: -144px;
+  overflow: hidden;
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+.mapwrap * {
+  padding: 0;
+  margin: 0;
+}
+.mapwrap .mapinfo {
+  /* width: 286px;
+  height: 120px; */
+  height: 96%;
+  border-radius: 5px;
+  border-bottom: 2px solid #ccc;
+  border-right: 1px solid #ccc;
+  overflow: hidden;
+  background: #fff;
+}
+.mapwrap .mapinfo:nth-child(1) {
+  border: 0;
+  box-shadow: 0px 1px 2px #888;
+}
+.mapinfo .title {
+  font-size: 15px;
+  text-align: center;
+  margin: 0;
+  line-height: 2rem;
+  padding-top: 3px;
+  font-family: "Gothic", "Arial Narrow", Arial, sans-serif;
+}
+.mapinfo .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #888;
+  width: 17px;
+  height: 17px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png");
+}
+.mapinfo .close:hover {
+  cursor: pointer;
+}
+.mapinfo .body {
+  position: relative;
+  overflow: hidden;
+  margin: 0 10px;
+  height: 65%;
+}
+.mapinfo .desc {
+  text-align: center;
+  position: relative;
+}
+.desc .ellipsis {
+  font-size: 10px!;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.desc .jibun {
+  font-size: 11px;
+  color: #888;
+  margin-top: -2px;
+}
+.mapinfo .img {
+  position: absolute;
+  margin: 0 10px;
+  top: 6px;
+  height: 100%;
+  color: #888;
+  overflow: hidden;
+  text-align: center;
+}
+.mapinfo:after {
+  content: "";
+  position: absolute;
+  margin-left: -12px;
+  left: 50%;
+  bottom: 0;
+  width: 22px;
+  height: 12px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+}
+.mapinfo .link {
+  color: #5085bb;
+}
 .addr-row {
   font-size: 13.5px;
   justify-content: center;
