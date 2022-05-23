@@ -3,6 +3,11 @@
     <b-card no-body>
       <b-tabs card>
         <b-tab no-body title="자주하는 질문" style="margin:1em;">
+          <router-link to="/qna">
+            <b-button variant="light" style="float:right; margin-bottom:1em"
+              ><md-icon>add</md-icon></b-button
+            >
+          </router-link>
           <b-table-simple hover responsive>
             <b-thead head-variant="dark">
               <b-tr style="margin-top:2em">
@@ -21,8 +26,19 @@
               />
             </tbody>
           </b-table-simple>
+          <div style="text-align:center">
+            <p>
+              조회 수가 높은 QnA입니다.<br />더 많은 QnA는 게시판을
+              이용해주세요...
+            </p>
+          </div>
         </b-tab>
-        <b-tab no-body title="공지사항" style="margin:1em;">
+        <b-tab no-body title="최근 공지사항" style="margin:1em;">
+          <router-link to="/announce">
+            <b-button variant="light" style="float:right; margin-bottom:1em"
+              ><md-icon>add</md-icon></b-button
+            >
+          </router-link>
           <b-table-simple hover responsive>
             <b-thead head-variant="dark">
               <b-tr style="margin-top:2em">
@@ -39,8 +55,15 @@
                 :key="article.no"
                 v-bind="article"
               />
-            </tbody> </b-table-simple
-        ></b-tab>
+            </tbody>
+          </b-table-simple>
+          <div style="text-align:center">
+            <p>
+              최신 공지사항입니다.<br />더 많은 공지사항은 게시판을
+              참고해주세요...
+            </p>
+          </div>
+        </b-tab>
       </b-tabs>
     </b-card>
   </div>

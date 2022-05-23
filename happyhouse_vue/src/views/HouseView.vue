@@ -55,7 +55,6 @@
 import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
 import HouseList from "@/components/house/HouseList.vue";
 import HouseDetailList from "@/components/house/HouseDetailList.vue";
-
 import HouseMap from "@/components/house/HouseMap.vue";
 
 import { mapState } from "vuex";
@@ -72,7 +71,7 @@ export default {
   props: {
     header: {
       type: String,
-      default: require("@/assets/img/HappyApart.jpg"),
+      default: require("@/assets/img/HouseSearch.jpg"),
     },
   },
   data() {
