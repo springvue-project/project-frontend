@@ -42,6 +42,9 @@
           </b-card>
         </b-col>
       </b-row>
+      <h5 style="margin-top: 15px">Comment</h5>
+      <comment-input />
+      <comment-list style="margin-top: 1em" />
     </b-container>
   </div>
 </template>
@@ -49,9 +52,15 @@
 <script>
 // import moment from "moment";
 import { getArticle, deleteArticle } from "@/api/qna";
+import CommentInput from "@/components/Comment/CommentInput.vue";
+import CommentList from "@/components/Comment/CommentList.vue";
 
 export default {
   name: "qnadetail",
+  components: {
+    CommentInput,
+    CommentList,
+  },
   data() {
     return {
       article: {},

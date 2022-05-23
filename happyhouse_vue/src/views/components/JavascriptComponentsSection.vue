@@ -86,6 +86,9 @@
       </div>
       <br />
       <br />
+      <index-card />
+      <br />
+      <br />
       <div class="title">
         <h2>KaKao Map</h2>
         <h5 class="description">Show current location using KaKao Map API</h5>
@@ -100,11 +103,13 @@
 </template>
 
 <script>
+import IndexCard from "@/components/cards/IndexCard.vue";
 /* global kakao */
 import { Modal } from "@/components";
 export default {
   components: {
     Modal,
+    IndexCard,
   },
   data() {
     return {
@@ -135,19 +140,16 @@ export default {
     classicModalHide() {
       this.classicModal = false;
     },
-    mounted() {
-      if (!window.kakao || !window.kakao.maps) {
-        const script = document.createElement("script");
-        script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=5bac587b1d037d39e5c1afb5a245aac9&autoload=false&libraries=services`;
-        /* global kakao */
-        script.addEventListener("load", () => {
-          console.log(kakao);
-          kakao.maps.load(this.initMap);
-        });
-        document.head.appendChild(script);
-      } else {
-        this.initMap();
-      }
+    initMap() {
+      const container = document.getElementById("map");
+      const options = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 5,
+      };
+
+      //지도 객체를 등록합니다.
+      //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
+      this.map = new kakao.maps.Map(container, options);
     },
     displayMarker(locPosition, message) {
       // 마커를 생성합니다

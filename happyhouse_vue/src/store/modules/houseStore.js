@@ -149,6 +149,7 @@ const houseStore = {
 
     detailHouse: ({ commit }, house) => {
       // 나중에 house.일련번호를 이용하여 API 호출
+      //주석생성
       commit("SET_DETAIL_HOUSE", house);
       const params = {
         aptCode: house.aptCode,

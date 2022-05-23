@@ -1,6 +1,6 @@
 <template>
   <div class="form-group form-inline justify-content-center">
-    <label class="mr-2" for="sido">시도 : </label>
+    <label class="mr-2" for="sido">시/도 : </label>
     <div>
       <b-select
         style="width:100%"
@@ -9,7 +9,7 @@
         @change="gugunList"
       ></b-select>
     </div>
-    <label class="mr-2 ml-3" for="gugun">구군 : </label>
+    <label class="mr-2 ml-3" for="gugun">구/군 : </label>
     <div>
       <b-select
         style="width:100%"
@@ -18,7 +18,7 @@
         @change="dongList"
       ></b-select>
     </div>
-    <label class="mr-2 ml-3" for="dong">읍면동 : </label>
+    <label class="mr-2 ml-3" for="dong">읍/면/동 : </label>
     <div>
       <b-select
         style="width:100%"
@@ -32,9 +32,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-
 const parkingStrore = "parkingStore";
-
 export default {
   name: "ParkingSearchBar",
   data() {
@@ -46,7 +44,6 @@ export default {
   },
   computed: {
     ...mapState(parkingStrore, ["sidos", "guguns", "dongs", "parkings"]),
-
     // sidos() {
     //   return this.$store.state.sidos;
     // },
@@ -69,7 +66,6 @@ export default {
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
     ]),
-
     // sidoList() {
     //   this.getSido();
     // },

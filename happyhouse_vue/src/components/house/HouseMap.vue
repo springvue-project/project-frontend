@@ -79,7 +79,9 @@ export default {
       this.map = new kakao.maps.Map(container, options);
 
       // 기존 마커 제거
+
       this.removeMarkers(this.markers);
+
       // 마커 생성
       this.createHouseMarkers(this.houses, this.markers);
       this.setMarkers(this.markers);
