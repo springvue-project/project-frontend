@@ -4,10 +4,10 @@
       <div class="md-layout">
         <div class="md-layout-item">
           <div class="brand">
-            <h1>Happy House</h1>
+            <h1>Announce Board</h1>
             <br />
             <br />
-            <h3>SSAFY 7th BUK Java Class 4</h3>
+            <h3>공지사항을 확인해 주세요!!!</h3>
           </div>
         </div>
       </div>

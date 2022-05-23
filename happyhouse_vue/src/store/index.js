@@ -19,9 +19,7 @@ const store = new Vuex.Store({
     qnaStore,
     houseStore,
     parkingStore,
-
     storeStore,
-
     commentStore,
   },
   plugins: [
