@@ -56,7 +56,7 @@
 
           <b-row v-if="this.housedeals && this.showStore">
             <b-col cols="12" class="mt-5">
-              <h3>Store List</h3>
+              <h3 id="storelist">Store List</h3>
               <p>선택하신 아파트 주변의 {{ type }} 정보입니다.</p>
               <hr class="my-2" />
             </b-col>
