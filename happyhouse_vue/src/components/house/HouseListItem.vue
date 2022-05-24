@@ -1,50 +1,43 @@
 <template>
-  <b-row
-    class="my-2"
-    @mouseover="colorChange(true)"
-    @mouseout="colorChange(false)"
-    :class="{ 'mouse-over-bgcolor': isColor }"
-  >
-    <b-col cols="6" class="align-self-center">
-      <div
-        class="apt-div"
-        style="
-      cursor:pointer"
-      >
-        <span @click="selectHouse">{{ house.apartmentName }}</span>
+  <b-row class="my-2">
+    <b-col cols="7" class="align-self-center">
+      <div class="apt-div gnb">
+        <span @click="selectHouse"
+          >{{ house.apartmentName }}
+          <md-tooltip md-direction="top">click! 위치 확인</md-tooltip>
+        </span>
       </div>
     </b-col>
-    <div style="float:right; display:flex; margin:auto">
-      <b-col
-        cols="1"
-        class="icon-div align-self-center"
-        style="
-      cursor:pointer"
-      >
+    <b-col cols="1" class="icon-div align-self-center">
+      <a>
         <i @click="selectHouse" class="store-icon material-icons">home</i>
-      </b-col>
-      <b-col cols="1" class="icon-div align-self-center">
-        <router-link to="#storelist">
-          <i @click="searchGas" class="store-icon material-icons"
-            >local_gas_station</i
-          >
-        </router-link>
-      </b-col>
-      <b-col cols="1" class="icon-div align-self-center">
-        <router-link to="#storelist">
-          <i @click="searchEstate" class="store-icon material-icons"
-            >real_estate_agent</i
-          >
-        </router-link>
-      </b-col>
-      <b-col cols="1" class="icon-div align-self-center">
-        <router-link to="#storelist">
-          <i @click="searchCafe" class="store-icon material-icons"
-            >local_cafe</i
-          >
-        </router-link>
-      </b-col>
-    </div>
+        <md-tooltip md-direction="top">click! 거래 정보 조회</md-tooltip>
+      </a>
+    </b-col>
+    <b-col cols="1" class="icon-div align-self-center">
+      <a href="#storeList">
+        <i @click="searchGas" class="store-icon material-icons"
+          >local_gas_station</i
+        >
+        <md-tooltip md-direction="top">click! 주유소 찾기</md-tooltip>
+      </a>
+    </b-col>
+    <b-col cols="1" class="icon-div align-self-center">
+      <a href="#storeList"
+        ><i @click="searchEstate" class="store-icon material-icons"
+          >real_estate_agent</i
+        >
+        <md-tooltip md-direction="top">click! 부동산 찾기</md-tooltip></a
+      >
+    </b-col>
+    <b-col cols="1" class="icon-div align-self-center">
+      <a href="#storeList">
+        <i @click="searchCafe" class="store-icon material-icons">local_cafe</i>
+        <md-tooltip md-direction="top">click! 카페 찾기</md-tooltip></a
+      >
+    </b-col>
+
+    <b-col cols="1" class="icon-div align-self-center"> </b-col>
   </b-row>
 </template>
 
@@ -129,6 +122,7 @@ export default {
 .apt {
   width: 50px;
 }
+
 .mouse-over-bgcolor {
   background-color: lightblue;
 }

@@ -66,6 +66,7 @@ export default {
       return this.houses;
     },
     house: function() {
+      console.log(this.house);
       this.closeOverlay();
       this.createInfoOverlay(this.house);
     },
@@ -142,13 +143,15 @@ export default {
         `        </div>` +
         `        <div class="body">` +
         `            <div class="img">` +
-        `                <img src="${this.aptimg()}"  >` +
+        `                <img src="${this.aptimg()}">` +
         `           </div>` +
-        `        </div>` +
         `            <div class="desc">` +
-        `                <div class="ellipsis">건축년도 : ${house.buildYear}</div>` +
-        `<div><a href="https://search.naver.com/search.naver?where=nexearch&sm=tab_jum&query=${house.dong}${house.apartmentName}" target="_blank" class="link">네이버 검색</a></div>` +
+        `                <div class="ellipsis"><p>주소</p>${house.dong}</div>` +
+        `                <div class="ellipsis">${house.roadName}</div>` +
+        `                <div class="ellipsis"><p>거래액</p>${house.recentPrice} (만원)</div>` +
+        `                <div class="ellipsis"><p>건축년도</p>${house.buildYear} 년</div>` +
         `            </div>` +
+        `        </div>` +
         `    </div>` +
         `</div>`;
 
@@ -183,12 +186,11 @@ export default {
   position: absolute;
   left: 0;
   bottom: 40px;
-  width: 288px;
-  height: 238px;
+  width: 350px;
+  height: 210px;
   margin-left: -144px;
   overflow: hidden;
   font-size: 12px;
-
   line-height: 1.5;
 }
 .mapwrap * {
@@ -214,7 +216,7 @@ export default {
   text-align: center;
   margin: 0;
   line-height: 2rem;
-  padding-top: 3px;
+  padding-top: 5px;
   font-family: "Gothic", "Arial Narrow", Arial, sans-serif;
 }
 .mapinfo .close {
@@ -233,18 +235,24 @@ export default {
   position: relative;
   overflow: hidden;
   margin: 0 10px;
-  height: 65%;
+  height: 83%;
 }
 .mapinfo .desc {
-  text-align: center;
-  position: relative;
   margin-top: 6px;
+  width: 50%;
+  margin-left: 53%;
+  padding: 0 10px;
+  font-size: 14px;
 }
 .desc .ellipsis {
   font-size: 10px!;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.desc .ellipsis p {
+  background-color: steelblue;
+  color: white;
 }
 .desc .jibun {
   font-size: 11px;
@@ -254,11 +262,11 @@ export default {
 .mapinfo .img {
   position: absolute;
   margin: 0 10px;
-  top: 6px;
-  height: 100%;
+  top: 7px;
+  width: 50%;
+  height: 90%;
   color: #888;
   overflow: hidden;
-  text-align: center;
 }
 .mapinfo:after {
   content: "";
