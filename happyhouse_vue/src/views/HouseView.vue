@@ -5,14 +5,9 @@
         <h3 class="underline-steelblue">
           House Service
         </h3>
-        <a href="#main"
-          ><md-button class="btn-down md-just-icon md-round"
-            ><md-icon>keyboard_double_arrow_down</md-icon></md-button
-          ></a
-        >
       </div>
     </div>
-    <div class="main main-raised" id="main">
+    <div class="main main-raised">
       <div class="section profile-content">
         <div class="container">
           <b-row style="margin-top:40px">

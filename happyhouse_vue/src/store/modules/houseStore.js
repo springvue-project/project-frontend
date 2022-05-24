@@ -17,7 +17,6 @@ const houseStore = {
     house: null,
     housedeals: [],
     searchType: null,
-    isLoading: false,
   },
 
   getters: {},
@@ -61,6 +60,7 @@ const houseStore = {
     CLEAR_HOUSEDEAL_LIST: (state) => {
       state.housedeals = [];
     },
+
     CLEAR_HOUSE_LIST: (state) => {
       state.houses = [];
     },
@@ -70,6 +70,7 @@ const houseStore = {
     LOADING_START: (state) => {
       state.isLoading = true;
     },
+
   },
 
   actions: {
@@ -136,13 +137,20 @@ const houseStore = {
       );
     },
     getAroundHouseList: ({ commit }, latlng) => {
-      commit("LOADING_START");
+      // vue cli enviroment variables 검색
+      //.env.local file 생성.
+      // 반드시 VUE_APP으로 시작해야 한다.
+      //   const SERVICE_KEY =
+      //     "9Xo0vlglWcOBGUDxH8PPbuKnlBwbWU6aO7%2Bk3FV4baF9GXok1yxIEF%2BIwr2%2B%2F%2F4oVLT8bekKU%2Bk9ztkJO0wsBw%3D%3D";
+      const params = {
+        lat: latlng.lat,
+        lng: latlng.lng,
+      };
       aroundHouseList(
-        latlng,
+        params,
         (response) => {
           //console.log(response.data);
           commit("SET_HOUSE_LIST", response.data);
-          commit("LOADING_FINISH");
           commit("CLEAR_HOUSEDEAL_LIST");
         },
         (error) => {

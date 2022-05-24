@@ -11,6 +11,15 @@
           />
         </b-col>
       </b-row>
+      <div style="display:flex;margin:auto">
+        <div class="overflow-auto">
+          <b-pagination-nav
+            :link-gen="linkGen"
+            :number-of-pages="1"
+            use-router
+          ></b-pagination-nav>
+        </div>
+      </div>
     </b-container>
     <b-container v-else class="bv-example-row mt-3">
       <b-row style="text-align:center">
@@ -38,6 +47,7 @@ export default {
   },
   data() {
     return {
+      crying: require("@/assets/img/crying.png"),
       comments: [],
       crying: require("@/assets/img/crying.png"),
     };
@@ -58,6 +68,11 @@ export default {
         console.log(error);
       },
     );
+  },
+  methods: {
+    linkGen(pageNum) {
+      return pageNum === 1 ? "?" : `?page=${pageNum}`;
+    },
   },
 };
 </script>

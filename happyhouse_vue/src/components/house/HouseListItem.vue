@@ -1,4 +1,5 @@
 <template>
+
   <b-row class="my-2">
     <b-col cols="6" class="align-self-center">
       <div
@@ -24,12 +25,14 @@
           >
           <md-tooltip md-direction="top">click! 거래 정보 조회</md-tooltip>
         </router-link>
+
       </b-col>
       <b-col cols="1" class="icon-div align-self-center">
         <router-link to="#storelist">
           <i @click="searchGas" class="store-icon material-icons"
             >local_gas_station</i
           >
+
           <md-tooltip md-direction="top">click! 주유소 찾기</md-tooltip>
         </router-link>
       </b-col>
@@ -42,16 +45,19 @@
             >click! 부동산 찾기</md-tooltip
           ></router-link
         >
+
       </b-col>
       <b-col cols="1" class="icon-div align-self-center">
         <router-link to="#storelist">
           <i @click="searchCafe" class="store-icon material-icons"
             >local_cafe</i
           >
+
           <md-tooltip md-direction="top"
             >click! 카페 찾기</md-tooltip
           ></router-link
         >
+
       </b-col>
     </div>
   </b-row>
@@ -138,7 +144,6 @@ export default {
 .apt {
   width: 50px;
 }
-
 .mouse-over-bgcolor {
   background-color: lightblue;
 }

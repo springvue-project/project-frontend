@@ -1,11 +1,13 @@
 <template>
-  <b-row class="my-2">
+  <b-row
+    class="my-2"
+    @mouseover="colorChange(true)"
+    @mouseout="colorChange(false)"
+    :class="{ 'mouse-over-bgcolor': isColor }"
+  >
     <b-col cols="12" class="align-self-center">
-      <div @click="selectStore" class="apt-div gnb">
-        <span
-          >{{ store.storeName }}
-          <md-tooltip md-direction="top">click! 위치 확인</md-tooltip>
-        </span>
+      <div @click="selectStore" class="apt-div">
+        <span>{{ store.storeName }}</span>
       </div>
     </b-col>
   </b-row>
@@ -46,7 +48,9 @@ export default {
 .apt {
   width: 50px;
 }
-
+.mouse-over-bgcolor {
+  background-color: lightblue;
+}
 .img-thumbnail {
   border: white;
 }
