@@ -78,6 +78,7 @@ export default {
     dongList() {
       console.log(this.gugunCode);
       this.CLEAR_DONG_LIST();
+      this.dongCode = null;
       if (this.gugunCode) this.getDong(this.gugunCode);
     },
     searchParking() {
@@ -88,4 +89,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style scopde>
+select {
+  line-height: 1rem !important;
+
+  border-top-color: white !important;
+  border-right-color: white !important;
+  border-left-color: white !important;
+}
+</style>

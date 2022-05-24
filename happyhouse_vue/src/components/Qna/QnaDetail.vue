@@ -63,7 +63,6 @@ import { getArticle, deleteArticle } from "@/api/qna";
 import CommentInput from "@/components/Comment/CommentInput.vue";
 import CommentList from "@/components/Comment/CommentList.vue";
 import { mapState } from "vuex";
-
 const userStore = "userStore";
 
 export default {

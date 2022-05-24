@@ -50,14 +50,12 @@ export default {
       if (this.stores != null && this.stores.length > 0) {
         if (window.kakao) {
           this.removeMarkers(this.markers);
+          this.closeOverlay();
           this.createStoreMarkers(this.stores, this.markers);
           this.setMarkers(this.markers);
           this.setBounds(this.markers);
         }
       }
-
-      this.closeOverlay();
-
       return this.stores;
     },
     store: function() {
@@ -81,7 +79,6 @@ export default {
       this.removeMarkers(this.markers);
       // 마커 생성
       this.createStoreMarkers(this.stores, this.markers);
-      console.log(this.stores);
       this.setMarkers(this.markers);
       this.setBounds(this.markers);
     },
@@ -138,7 +135,7 @@ export default {
       }
       console.log("this.type", imgsrc);
       var infoContent =
-        `<div" class="mapwrap">` +
+        `<div class="mapwrap">` +
         `    <div class="mapinfo">` +
         `        <div class="title">` +
         `            ${store.storeName}` +
