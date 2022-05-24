@@ -40,7 +40,7 @@
         style="height:500px; overflow:scroll; overflow-x:hidden"
         class="scroll"
       >
-        <house-detail-list />
+        <house-detail-list id="housedetaillist" />
       </b-col>
     </b-row>
     <b-row v-if="showDetail && this.showStore">
@@ -113,6 +113,10 @@ export default {
       },
     );
   },
+  destroyed() {
+    //this.houseStore.resetHouseDealList();
+    //this.houseStore.resetHouseList();
+  },
   mounted() {
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
@@ -133,6 +137,7 @@ export default {
   computed: {
     ...mapState(houseStore, ["houses", "house"]),
     ...mapState(storeStore, ["showStore", "closeStore", "type"]),
+    ...mapActions(houseStore, ["resetHouseDealList", "resetHouseList"]),
   },
   watch: {
     ...mapState(houseStore, ["houses", "house"]),

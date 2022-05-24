@@ -65,6 +65,7 @@
                               <p>Search by Coordinates</p></router-link
                             >
                           </li>
+
                           <li>
                             <router-link to="/parking">
                               <i class="material-icons">directions_car</i>
