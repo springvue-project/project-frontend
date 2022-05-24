@@ -5,9 +5,14 @@
         <h3 class="underline-steelblue">
           House Service
         </h3>
+        <a href="#main"
+          ><md-button class="btn-down md-just-icon md-round"
+            ><md-icon>keyboard_double_arrow_down</md-icon></md-button
+          ></a
+        >
       </div>
     </div>
-    <div class="main main-raised">
+    <div class="main main-raised" id="main">
       <div class="section profile-content">
         <div class="container">
           <b-row style="margin-top:40px">
@@ -56,7 +61,7 @@
 
           <b-row v-if="this.housedeals && this.showStore">
             <b-col cols="12" class="mt-5">
-              <h3 id="storelist">Store List</h3>
+              <h3>Store List</h3>
               <p>선택하신 아파트 주변의 {{ type }} 정보입니다.</p>
               <hr class="my-2" />
             </b-col>

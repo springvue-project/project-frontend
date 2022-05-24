@@ -25,6 +25,12 @@
           <div class="md-collapse">
             <div class="md-collapse-wrapper">
               <md-list>
+                <md-list-item>
+                  <router-link to="/house">
+                    <i class="material-icons">house</i>
+                    <p>House</p>
+                  </router-link>
+                </md-list-item>
                 <md-list-item
                   ><router-link to="/announce">
                     <i class="material-icons">content_paste</i>
@@ -54,15 +60,9 @@
                         </md-button>
                         <ul class="dropdown-menu dropdown-with-icons">
                           <li>
-                            <router-link to="/house">
-                              <i class="material-icons">house</i>
-                              <p>Search by Address</p>
-                            </router-link>
-                          </li>
-                          <li>
                             <router-link to="/aroundapt"
                               ><i class="material-icons">real_estate_agent</i>
-                              <p>Search by Coordinates</p></router-link
+                              <p>Search Around</p></router-link
                             >
                           </li>
                           <li>

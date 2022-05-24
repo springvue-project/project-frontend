@@ -18,9 +18,6 @@ export default {
       infoContent: null,
       infoOverlay: [],
       detailStore: null,
-      gasstationimg: require("@/assets/img/GasStation.jpg"),
-      cafeimg: require("@/assets/img/Cafe.jpg"),
-      estateimg: require("@/assets/img/Estate.jpg"),
     };
   },
 
@@ -50,12 +47,13 @@ export default {
       if (this.stores != null && this.stores.length > 0) {
         if (window.kakao) {
           this.removeMarkers(this.markers);
+          this.closeOverlay();
           this.createStoreMarkers(this.stores, this.markers);
           this.setMarkers(this.markers);
           this.setBounds(this.markers);
         }
       }
-      this.closeOverlay();
+
       return this.stores;
     },
     store: function() {
@@ -79,7 +77,6 @@ export default {
       this.removeMarkers(this.markers);
       // 마커 생성
       this.createStoreMarkers(this.stores, this.markers);
-      console.log(this.stores);
       this.setMarkers(this.markers);
       this.setBounds(this.markers);
     },
@@ -90,7 +87,6 @@ export default {
         }
       }
       this.markers = [];
-      this.infoContent = null;
     },
 
     createStoreMarkers(stores, markers) {
@@ -125,26 +121,16 @@ export default {
       this.map.setBounds(this.bounds);
     },
     createInfoOverlay(store) {
-      var type = this.type;
-      var imgsrc = null;
-      if (this.type == "카페") {
-        imgsrc = require("@/assets/img/Cafe.jpg");
-      } else if (this.type == "부동산") {
-        imgsrc = require("@/assets/img/Estate.jpg");
-      } else {
-        imgsrc = require("@/assets/img/GasStation.jpg");
-      }
-      console.log("this.type", imgsrc);
       var infoContent =
-        `<div" class="mapwrap">` +
+        `<div class="mapwrap">` +
         `    <div class="mapinfo">` +
         `        <div class="title">` +
         `            ${store.storeName}` +
         `        </div>` +
         `        <div class="body">` +
-        `               <div class="img">` +
-        `                 <img src="${imgsrc}"/>` +
-        `               </div>` +
+        `            <div class="img">` +
+        `                <img src="${this.aptimg()}"  >` +
+        `           </div>` +
         `        </div>` +
         `            <div class="desc">` +
         `                <div class="ellipsis">주소 : ${store.address}</div>` +
@@ -187,6 +173,9 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    aptimg: function() {
+      return require(`@/assets/img/apt/apt.png`);
     },
   },
 };

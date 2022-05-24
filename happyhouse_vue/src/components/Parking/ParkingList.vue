@@ -4,33 +4,30 @@
       <!-- <div style="text-align: center">
         <br />설정한 주소 중심지의 반경 2km를 검색합니다.
       </div> -->
-      <table class="table mt-2" v-if="parkings && parkings.length != 0">
-        <colgroup>
-          <col width="150" />
-          <col width="*" />
-          <col width="70" />
-          <col width="70" />
-          <col width="100" />
-          <col width="150" />
-        </colgroup>
+      <table
+        class="table table-hover mt-2"
+        v-if="parkings && parkings.length != 0"
+      >
         <thead>
           <tr>
+            <th scope="col">total</th>
+            <th>{{ parkings.length }}</th>
+          </tr>
+          <tr>
             <th scope="col">주차장명</th>
-            <th scope="col">주소</th>
-            <th scope="col">구분</th>
-            <th scope="col">요금</th>
-            <th scope="col">주차대수</th>
-            <th scope="col">연락처</th>
+            <th></th>
           </tr>
         </thead>
         <tbody slot="body">
           <tr v-for="(parking, index) in parkings" :key="index">
             <td>{{ parking.parkName }}</td>
-            <td>{{ parking.parkAddress }}</td>
-            <td>{{ parking.type }}</td>
-            <td>{{ parking.pay }}</td>
-            <td>{{ parking.count }}</td>
-            <td>{{ parking.phone }}</td>
+            <td>
+              <i
+                @click="openClassicModal(parking)"
+                class="store-icon material-icons"
+                >search</i
+              >
+            </td>
           </tr>
         </tbody>
       </table>
@@ -53,29 +50,78 @@
           </div>
         </div>
       </div>
-      <parking-map />
     </div>
+    <modal v-if="classicModal" @close="classicModalHide">
+      <template slot="header">
+        <h4 class="modal-title">주차장 정보</h4>
+        <md-button
+          class="md-simple md-just-icon md-round modal-default-button"
+          @click="classicModalHide"
+        >
+          <md-icon>clear</md-icon>
+        </md-button>
+      </template>
+
+      <template slot="body">
+        <table class="table  table-hover">
+          <tbody slot="body">
+            <tr>
+              <th>주차장명</th>
+              <td>
+                {{ parking.parkName }}
+              </td>
+            </tr>
+            <tr>
+              <th>주소</th>
+              <td>{{ parking.parkAddress }}</td>
+            </tr>
+            <tr>
+              <th>타입</th>
+              <td>{{ parking.type }}</td>
+            </tr>
+            <tr>
+              <th>요금정보</th>
+              <td>{{ parking.pay }}</td>
+            </tr>
+            <tr>
+              <th>전화번호</th>
+              <td>{{ parking.phone }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </template>
+
+      <template slot="footer">
+        <md-button @click="classicModalHide" class="md-success md-simple"
+          >닫기</md-button
+        >
+      </template>
+    </modal>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import ParkingMap from "@/components/Parking/ParkingMap.vue";
+import { Modal } from "@/components";
 
 const parkingStore = "parkingStore";
 
 export default {
   name: "ParkingList",
-  components: {
-    ParkingMap,
-  },
+  components: { Modal },
   data() {
-    return {};
+    return {
+      classicModal: false,
+      parking: null,
+    };
   },
   computed: {
     ...mapState(parkingStore, ["parkings"]),
   },
   methods: {
+    classicModalHide() {
+      this.classicModal = false;
+    },
     removeNotify(e, notifyClass) {
       var target = e.target;
       while (target.className.indexOf(notifyClass) === -1) {
@@ -83,8 +129,27 @@ export default {
       }
       return target.parentNode.removeChild(target);
     },
+    openClassicModal(parking) {
+      console.log(parking);
+
+      parking.parkAddress =
+        parking.parkAddress == "" ? "정보없음" : parking.parkAddress;
+      this.parking = parking;
+      this.classicModal = true;
+    },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.store-icon {
+  cursor: pointer;
+}
+.modal-table {
+  width: 100%;
+}
+.table td,
+.table th {
+  vertical-align: middle;
+}
+</style>
