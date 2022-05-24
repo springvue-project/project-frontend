@@ -55,7 +55,7 @@
               style="height:550px; overflow:scroll; overflow-x:hidden"
               class="scroll"
             >
-              <house-detail-list />
+              <house-detail-list id="housedetaillist" />
             </b-col>
           </b-row>
 

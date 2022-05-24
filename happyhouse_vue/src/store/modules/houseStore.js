@@ -160,11 +160,11 @@ const houseStore = {
       console.log("dfdf", params);
       SearchNameHouseList(
         params,
+
         (response) => {
           //console.log(response.data);
           commit("CLEAR_HOUSE_LIST");
           commit("SET_HOUSE_LIST", response.data);
-          console.log("test", response.data);
           commit("CLEAR_HOUSEDEAL_LIST");
         },
         (error) => {
@@ -198,6 +198,7 @@ const houseStore = {
     resetHouseDealList: ({ commit }) => {
       commit("CLEAR_HOUSEDEAL_LIST");
     },
+
     resetHouseList: ({ commit }) => {
       commit("CLEAR_HOUSE_LIST");
     },

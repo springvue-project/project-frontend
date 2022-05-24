@@ -14,7 +14,7 @@
     </b-col>
     <div style="float:right; display:flex; margin:auto">
       <b-col cols="1" class="icon-div">
-        <router-link to="#housedeallist">
+        <router-link to="#housedetaillist">
           <i
             @click="selectHouse"
             class="store-icon material-icons"

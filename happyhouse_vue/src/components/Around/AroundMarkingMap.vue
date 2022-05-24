@@ -54,7 +54,7 @@
         style="height:500px; overflow:scroll; overflow-x:hidden"
         class="scroll"
       >
-        <house-detail-list />
+        <house-detail-list id="housedetaillist" />
       </b-col>
     </b-row>
     <b-row v-if="showDetail && this.showStore">
