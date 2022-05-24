@@ -14,7 +14,7 @@
     </b-col>
     <div style="float:right; display:flex; margin:auto">
       <b-col cols="1" class="icon-div">
-        <router-link to="#storelist">
+        <router-link to="#housedeallist">
           <i
             @click="selectHouse"
             class="store-icon material-icons"
@@ -30,7 +30,6 @@
           <i @click="searchGas" class="store-icon material-icons"
             >local_gas_station</i
           >
-
           <md-tooltip md-direction="top">click! 주유소 찾기</md-tooltip>
         </router-link>
       </b-col>
@@ -49,7 +48,6 @@
           <i @click="searchCafe" class="store-icon material-icons"
             >local_cafe</i
           >
-
           <md-tooltip md-direction="top"
             >click! 카페 찾기</md-tooltip
           ></router-link
@@ -140,6 +138,7 @@ export default {
 .apt {
   width: 50px;
 }
+
 .mouse-over-bgcolor {
   background-color: lightblue;
 }

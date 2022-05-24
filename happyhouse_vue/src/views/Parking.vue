@@ -5,17 +5,40 @@
         <h3 class="underline-steelblue">
           Parking Service
         </h3>
+        <a href="#main"
+          ><md-button class="btn-down md-just-icon md-round"
+            ><md-icon>keyboard_double_arrow_down</md-icon></md-button
+          ></a
+        >
       </div>
     </div>
-    <div class="main main-raised">
+    <div class="main main-raised" id="main">
       <div class="section profile-content">
         <div class="container">
           <b-row>
+            <b-col cols="12" class="mt-2">
+              <h3>Parking Info</h3>
+              <p>동별 주차장 정보를 제공합니다.</p>
+              <hr class="my-2" />
+            </b-col>
+          </b-row>
+          <b-row class="mt-5">
             <b-col>
               <parking-search-bar></parking-search-bar>
             </b-col>
           </b-row>
-          <parking-list />
+          <b-row class="mt-5">
+            <b-col
+              cols="5"
+              style="height:500px; overflow:scroll; overflow-x:hidden"
+              class="scroll"
+            >
+              <parking-list />
+            </b-col>
+            <b-col cols="7">
+              <parking-map />
+            </b-col>
+          </b-row>
         </div>
       </div>
     </div>
@@ -25,11 +48,13 @@
 <script>
 import ParkingSearchBar from "@/components/Parking/ParkingSearchBar.vue";
 import ParkingList from "@/components/Parking/ParkingList.vue";
+import ParkingMap from "@/components/Parking/ParkingMap.vue";
 
 export default {
   components: {
     ParkingSearchBar,
     ParkingList,
+    ParkingMap,
   },
   bodyClass: "index-page",
   data() {

@@ -45,6 +45,13 @@ function aroundHouseList(params, success, fail) {
     .catch(fail);
 }
 
+function SearchNameHouseList(params, success, fail) {
+  api
+    .get(`/apart/searchName`, { params: params })
+    .then(success)
+    .catch(fail);
+}
+
 export {
   sidoList,
   gugunList,
@@ -52,4 +59,5 @@ export {
   houseList,
   houseDealList,
   aroundHouseList,
+  SearchNameHouseList,
 };

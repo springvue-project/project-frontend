@@ -1,5 +1,15 @@
 <template>
   <b-container v-if="houses && houses.length != 0" class="bv-example-row mt-3">
+    <b-input-group prepend="아파트이름" class="mt-3">
+      <b-form-input
+        v-model="aptName"
+        placeholder="아파트 이름을 입력하세요.."
+        >{{ this.aptName }}</b-form-input
+      >
+      <b-input-group-append>
+        <b-button variant="outline-success" @click="searchName">검색</b-button>
+      </b-input-group-append>
+    </b-input-group>
     <house-list-item
       v-for="(house, index) in houses"
       :key="index"
@@ -15,7 +25,7 @@
 
 <script>
 import HouseListItem from "@/components/house/HouseListItem.vue";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 const houseStore = "houseStore";
 
@@ -25,14 +35,35 @@ export default {
     HouseListItem,
   },
   data() {
-    return {};
+    return {
+      aptName: "",
+    };
   },
   computed: {
-    ...mapState(houseStore, ["houses"]),
+    ...mapState(houseStore, ["dongs", "houses"]),
     // houses() {
     //   return this.$store.state.houses;
     // },
     //주성생성
+  },
+  methods: {
+    ...mapActions(houseStore, ["getHouseList", "getSearchNameHouseList"]),
+    searchName() {
+      var aptName = this.aptName;
+      var dongCode = sessionStorage.getItem("dongCode");
+      var params = {
+        dongCode: dongCode,
+        aptName: aptName,
+      };
+      //this.resetHouseList();
+      if (this.aptName === "") {
+        this.getHouseList(dongCode);
+      } else {
+        //this.resetHouseList();
+        this.getSearchNameHouseList(params);
+        this.aptName = "";
+      }
+    },
   },
 };
 </script>

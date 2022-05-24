@@ -94,8 +94,10 @@ export default {
       if (this.gugunCode) this.getDong(this.gugunCode);
     },
     searchApt() {
+      sessionStorage.removeItem("dongCode");
       console.log(this.dongCode);
       if (this.dongCode) this.getHouseList(this.dongCode);
+      sessionStorage.setItem("dongCode", this.dongCode);
     },
   },
   //주석생성

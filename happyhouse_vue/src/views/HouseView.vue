@@ -5,9 +5,14 @@
         <h3 class="underline-steelblue">
           House Service
         </h3>
+        <a href="#main"
+          ><md-button class="btn-down md-just-icon md-round"
+            ><md-icon>keyboard_double_arrow_down</md-icon></md-button
+          ></a
+        >
       </div>
     </div>
-    <div class="main main-raised">
+    <div class="main main-raised" id="main">
       <div class="section profile-content">
         <div class="container">
           <b-row style="margin-top:40px">
@@ -39,7 +44,7 @@
           </b-row>
           <b-row v-if="this.housedeals && this.housedeals.length != 0">
             <b-col cols="12">
-              <h3 ref="deallist">House Deal Info</h3>
+              <h3 id="housedeallist" ref="deallist">House Deal Info</h3>
               <p>선택하신 아파트의 거래 내역 입니다.</p>
               <hr class="my-2" />
             </b-col>
@@ -111,9 +116,11 @@ export default {
   data() {
     return {};
   },
+
   computed: {
     ...mapState(houseStore, ["housedeals"]),
     ...mapState(storeStore, ["showStore", "type"]),
+    ...mapActions(houseStore, ["resetHouseDealList", "resetHouseList"]),
     headerStyle() {
       return {
         backgroundImage: `url(${this.header})`,

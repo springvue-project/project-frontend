@@ -1,5 +1,18 @@
 <template>
   <div>
+    <b-row>
+      <div v-if="isLoading" class="loading-container">
+        <div class="loading">
+          <Fade-loader />
+        </div>
+        <div class="loadingmsg text-center">
+          <p>
+            아파트 정보를 불러오는 중입니다<br />
+            조금만 기다려 주세요.
+          </p>
+        </div>
+      </div>
+    </b-row>
     <b-row class="addr-row">
       <div
         class="addr-div"
@@ -18,6 +31,7 @@
         >주변 아파트 검색</md-button
       >
     </b-row>
+
     <b-row v-if="showDetail">
       <b-col cols="12" class="mt-5">
         <h3>House List</h3>
@@ -70,6 +84,7 @@ import HouseList from "@/components/house/HouseList.vue";
 import HouseDetailList from "../house/HouseDetailList.vue";
 import StoreMap from "@/components/Store/StoreMap.vue";
 import StoreList from "@/components/Store/StoreList.vue";
+import FadeLoader from "vue-spinner/src/FadeLoader.vue";
 
 import { mapState, mapActions } from "vuex";
 
@@ -78,7 +93,7 @@ const storeStore = "storeStore";
 
 export default {
   name: "AroudMarkingMap",
-  components: { HouseList, HouseDetailList, StoreMap, StoreList },
+  components: { HouseList, HouseDetailList, StoreMap, StoreList, FadeLoader },
   data() {
     return {
       map: null,
@@ -114,8 +129,9 @@ export default {
     );
   },
   destroyed() {
-    //this.houseStore.resetHouseDealList();
-    //this.houseStore.resetHouseList();
+    this.resetHouseDealList();
+    this.resetHouseList();
+    this.cleanStoreList();
   },
   mounted() {
     if (!window.kakao || !window.kakao.maps) {
@@ -135,12 +151,11 @@ export default {
     }
   },
   computed: {
-    ...mapState(houseStore, ["houses", "house"]),
+    ...mapState(houseStore, ["houses", "house", "isLoading"]),
     ...mapState(storeStore, ["showStore", "closeStore", "type"]),
-    ...mapActions(houseStore, ["resetHouseDealList", "resetHouseList"]),
   },
   watch: {
-    ...mapState(houseStore, ["houses", "house"]),
+    ...mapState(houseStore, ["houses", "house", "isLoading"]),
     ...mapState(storeStore, ["showStore", "closeStore", "type"]),
     mouseLntLng: function() {
       this.setMarkers(this.markers);
@@ -169,6 +184,9 @@ export default {
   methods: {
     ...mapActions(houseStore, ["getAroundHouseList"]),
     ...mapActions(storeStore, ["cleanStoreList"]),
+    ...mapActions(houseStore, ["resetHouseDealList", "resetHouseList"]),
+    ...mapActions(storeStore, ["cleanStoreList"]),
+
     removeAddr(index) {
       console.log(index);
       this.markers[index].setMap(null);
@@ -307,11 +325,13 @@ export default {
         `            <div class="img">` +
         `                <img src="${this.aptimg()}">` +
         `           </div>` +
-        `        </div>` +
         `            <div class="desc">` +
-        `                <div class="ellipsis">법정동 : ${house.dong}</div>` +
-        `                <div class="ellipsis">건축년도 : ${house.buildYear}</div>` +
+        `                <div class="ellipsis"><p>주소</p>${house.dong}</div>` +
+        `                <div class="ellipsis">${house.roadName}</div>` +
+        `                <div class="ellipsis"><p>거래액</p>${house.recentPrice} (만원)</div>` +
+        `                <div class="ellipsis"><p>건축년도</p>${house.buildYear} 년</div>` +
         `            </div>` +
+        `        </div>` +
         `    </div>` +
         `</div>`;
 
@@ -353,113 +373,22 @@ export default {
       });
       avgLat /= this.markers.length;
       avgLng /= this.markers.length;
-      console.log("avg", avgLat, avgLng);
+
       const latlng = {
         lat: avgLat,
         lng: avgLng,
       };
-
+      console.log(latlng);
+      // 좌표로 주소 받아오기
       this.getAroundHouseList(latlng);
       this.cleanStoreList();
+      console.log(this.$store.state.isLoading);
     },
   },
 };
 </script>
 
 <style scoped>
-.mapwrap {
-  position: absolute;
-  left: 0;
-  bottom: 40px;
-  width: 288px;
-  height: 210px;
-  margin-left: -144px;
-  overflow: hidden;
-  font-size: 12px;
-
-  line-height: 1.5;
-}
-.mapwrap * {
-  padding: 0;
-  margin: 0;
-}
-.mapwrap .mapinfo {
-  /* width: 286px;
-  height: 120px; */
-  height: 96%;
-  border-radius: 5px;
-  border-bottom: 2px solid #ccc;
-  border-right: 1px solid #ccc;
-  overflow: hidden;
-  background: #fff;
-}
-.mapwrap .mapinfo:nth-child(1) {
-  border: 0;
-  box-shadow: 0px 1px 2px #888;
-}
-.mapinfo .title {
-  font-size: 15px;
-  text-align: center;
-  margin: 0;
-  line-height: 2rem;
-  padding-top: 3px;
-  font-family: "Gothic", "Arial Narrow", Arial, sans-serif;
-}
-.mapinfo .close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #888;
-  width: 17px;
-  height: 17px;
-  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png");
-}
-.mapinfo .close:hover {
-  cursor: pointer;
-}
-.mapinfo .body {
-  position: relative;
-  overflow: hidden;
-  margin: 0 10px;
-  height: 65%;
-}
-.mapinfo .desc {
-  text-align: center;
-  position: relative;
-}
-.desc .ellipsis {
-  font-size: 10px!;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.desc .jibun {
-  font-size: 11px;
-  color: #888;
-  margin-top: -2px;
-}
-.mapinfo .img {
-  position: absolute;
-  margin: 0 10px;
-  top: 6px;
-  height: 100%;
-  color: #888;
-  overflow: hidden;
-  text-align: center;
-}
-.mapinfo:after {
-  content: "";
-  position: absolute;
-  margin-left: -12px;
-  left: 50%;
-  bottom: 0;
-  width: 22px;
-  height: 12px;
-  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
-}
-.mapinfo .link {
-  color: #5085bb;
-}
 .addr-row {
   font-size: 13.5px;
   justify-content: center;
@@ -481,5 +410,24 @@ export default {
 }
 .search-btn {
   font-size: 1rem;
+}
+.loading {
+  z-index: 2;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: rgba(0, 0, 0, 40%) 0 0 0 9999px;
+}
+.loadingmsg {
+  z-index: 2;
+  font-weight: bold;
+  position: fixed;
+  top: 55%;
+  left: calc(50% - 133px);
+}
+.loadingmsg p {
+  color: white;
+  font-size: 18px;
 }
 </style>

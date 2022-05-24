@@ -25,7 +25,7 @@
           </slide>
           <slide>
             <div class="carousel-caption">
-              <h1 style="margin-bottom:3em">
+              <h1 class="service-title" style="margin-bottom:3em">
                 HouseSearch Service
               </h1>
             </div>
@@ -50,8 +50,14 @@
         </carousel>
       </md-card>
     </div>
+
     <div class="main main-raised">
-      <div class="section section-javascript">
+      <a href="#main"
+        ><md-button class="btn-down md-just-icon md-round mt-3"
+          ><md-icon>keyboard_double_arrow_down</md-icon></md-button
+        ></a
+      >
+      <div class="section section-javascript" id="main">
         <div class="container">
           <javascript-components></javascript-components>
         </div>
@@ -135,6 +141,11 @@ export default {
 .carousel-caption {
   margin-bottom: 20em;
 }
+
+.VueCarousel-wrapper img {
+  filter: brightness(80%);
+}
+
 // .img {
 //   object-fit: cover;
 // }
