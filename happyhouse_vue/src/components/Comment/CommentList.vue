@@ -49,9 +49,15 @@ export default {
     return {
       crying: require("@/assets/img/crying.png"),
       comments: [],
+      crying: require("@/assets/img/crying.png"),
     };
   },
   computed: {},
+  methods: {
+    linkGen(pageNum) {
+      return pageNum === 1 ? "?" : `?page=${pageNum}`;
+    },
+  },
   created() {
     listComment(
       this.$route.params.articleno,

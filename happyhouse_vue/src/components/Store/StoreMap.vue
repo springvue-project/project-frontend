@@ -55,7 +55,9 @@ export default {
           this.setBounds(this.markers);
         }
       }
+
       this.closeOverlay();
+
       return this.stores;
     },
     store: function() {
