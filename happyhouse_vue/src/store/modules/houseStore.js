@@ -5,6 +5,7 @@ import {
   dongList,
   houseDealList,
   aroundHouseList,
+  SearchNameHouseList,
 } from "@/api/house.js";
 
 const houseStore = {
@@ -139,6 +140,7 @@ const houseStore = {
       commit("LOADING_START");
       aroundHouseList(
         latlng,
+
         (response) => {
           //console.log(response.data);
           commit("SET_HOUSE_LIST", response.data);
@@ -150,7 +152,28 @@ const houseStore = {
         },
       );
     },
+    // 추가5/25
+    getSearchNameHouseList: ({ commit }, param) => {
+      const params = {
+        dongCode: param.dongCode,
+        aptName: param.aptName,
+      };
+      console.log("dfdf", params);
+      SearchNameHouseList(
+        params,
 
+        (response) => {
+          //console.log(response.data);
+          commit("CLEAR_HOUSE_LIST");
+          commit("SET_HOUSE_LIST", response.data);
+
+          commit("CLEAR_HOUSEDEAL_LIST");
+        },
+        (error) => {
+          console.log(error);
+        },
+      );
+    },
     detailHouse: ({ commit }, house) => {
       // 나중에 house.일련번호를 이용하여 API 호출
       //주석생성
@@ -177,6 +200,7 @@ const houseStore = {
     resetHouseDealList: ({ commit }) => {
       commit("CLEAR_HOUSEDEAL_LIST");
     },
+
     //CLEAR_HOUSE_LIST
     resetHouseList: ({ commit }) => {
       commit("CLEAR_HOUSE_LIST");
