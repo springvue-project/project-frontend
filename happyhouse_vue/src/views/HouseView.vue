@@ -116,11 +116,13 @@ export default {
   data() {
     return {};
   },
+
   destroyed() {
     if (sessionStorage.getItem("dongCode") != null) {
       sessionStorage.removeItem("dongCode");
     }
   },
+
   computed: {
     ...mapState(houseStore, ["housedeals"]),
     ...mapState(storeStore, ["showStore", "type"]),

@@ -140,6 +140,7 @@ const houseStore = {
       commit("LOADING_START");
       aroundHouseList(
         latlng,
+
         (response) => {
           //console.log(response.data);
           commit("SET_HOUSE_LIST", response.data);
@@ -165,6 +166,7 @@ const houseStore = {
           //console.log(response.data);
           commit("CLEAR_HOUSE_LIST");
           commit("SET_HOUSE_LIST", response.data);
+
           commit("CLEAR_HOUSEDEAL_LIST");
         },
         (error) => {
