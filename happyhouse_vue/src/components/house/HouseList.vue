@@ -55,6 +55,10 @@ export default {
         dongCode: dongCode,
         aptName: aptName,
       };
+      if (!dongCode) {
+        alert("주소 검색 시에만 이용 가능합니다!!");
+        return;
+      }
       //this.resetHouseList();
       if (this.aptName === "") {
         this.getHouseList(dongCode);
