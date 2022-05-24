@@ -5,37 +5,46 @@
     @mouseout="colorChange(false)"
     :class="{ 'mouse-over-bgcolor': isColor }"
   >
-    <b-col cols="7" class="align-self-center">
-      <div class="apt-div">
+    <b-col cols="6" class="align-self-center">
+      <div
+        class="apt-div"
+        style="
+      cursor:pointer"
+      >
         <span @click="selectHouse">{{ house.apartmentName }}</span>
       </div>
     </b-col>
-    <b-col cols="1" class="icon-div align-self-center">
-      <a> <i @click="selectHouse" class="store-icon material-icons">home</i></a>
-    </b-col>
-    <b-col cols="1" class="icon-div align-self-center">
-      <a href="#storeList">
-        <i @click="searchGas" class="store-icon material-icons"
-          >local_gas_station</i
-        ></a
+    <div style="float:right; display:flex; margin:auto">
+      <b-col
+        cols="1"
+        class="icon-div align-self-center"
+        style="
+      cursor:pointer"
       >
-    </b-col>
-    <b-col cols="1" class="icon-div align-self-center">
-      <a href="#storeList"
-        ><i @click="searchEstate" class="store-icon material-icons"
-          >real_estate_agent</i
-        ></a
-      >
-    </b-col>
-    <b-col cols="1" class="icon-div align-self-center">
-      <a href="#storeList">
-        <i @click="searchCafe" class="store-icon material-icons"
-          >local_cafe</i
-        ></a
-      >
-    </b-col>
-
-    <b-col cols="1" class="icon-div align-self-center"> </b-col>
+        <i @click="selectHouse" class="store-icon material-icons">home</i>
+      </b-col>
+      <b-col cols="1" class="icon-div align-self-center">
+        <router-link to="#storelist">
+          <i @click="searchGas" class="store-icon material-icons"
+            >local_gas_station</i
+          >
+        </router-link>
+      </b-col>
+      <b-col cols="1" class="icon-div align-self-center">
+        <router-link to="#storelist">
+          <i @click="searchEstate" class="store-icon material-icons"
+            >real_estate_agent</i
+          >
+        </router-link>
+      </b-col>
+      <b-col cols="1" class="icon-div align-self-center">
+        <router-link to="#storelist">
+          <i @click="searchCafe" class="store-icon material-icons"
+            >local_cafe</i
+          >
+        </router-link>
+      </b-col>
+    </div>
   </b-row>
 </template>
 
