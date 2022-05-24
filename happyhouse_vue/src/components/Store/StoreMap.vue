@@ -18,6 +18,9 @@ export default {
       infoContent: null,
       infoOverlay: [],
       detailStore: null,
+      gasstationimg: require("@/assets/img/GasStation.jpg"),
+      cafeimg: require("@/assets/img/Cafe.jpg"),
+      estateimg: require("@/assets/img/Estate.jpg"),
     };
   },
 
@@ -53,7 +56,6 @@ export default {
           this.setBounds(this.markers);
         }
       }
-
       return this.stores;
     },
     store: function() {
@@ -87,6 +89,7 @@ export default {
         }
       }
       this.markers = [];
+      this.infoContent = null;
     },
 
     createStoreMarkers(stores, markers) {
@@ -121,6 +124,16 @@ export default {
       this.map.setBounds(this.bounds);
     },
     createInfoOverlay(store) {
+      var type = this.type;
+      var imgsrc = null;
+      if (this.type == "카페") {
+        imgsrc = require("@/assets/img/Cafe.jpg");
+      } else if (this.type == "부동산") {
+        imgsrc = require("@/assets/img/Estate.jpg");
+      } else {
+        imgsrc = require("@/assets/img/GasStation.jpg");
+      }
+      console.log("this.type", imgsrc);
       var infoContent =
         `<div class="mapwrap">` +
         `    <div class="mapinfo">` +
@@ -128,9 +141,9 @@ export default {
         `            ${store.storeName}` +
         `        </div>` +
         `        <div class="body">` +
-        `            <div class="img">` +
-        `                <img src="${this.aptimg()}"  >` +
-        `           </div>` +
+        `               <div class="img">` +
+        `                 <img src="${imgsrc}"/>` +
+        `               </div>` +
         `        </div>` +
         `            <div class="desc">` +
         `                <div class="ellipsis">주소 : ${store.address}</div>` +
@@ -173,9 +186,6 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-    },
-    aptimg: function() {
-      return require(`@/assets/img/apt/apt.png`);
     },
   },
 };

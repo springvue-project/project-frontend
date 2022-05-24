@@ -61,6 +61,9 @@ const houseStore = {
     CLEAR_HOUSEDEAL_LIST: (state) => {
       state.housedeals = [];
     },
+    CLEAR_HOUSE_LIST: (state) => {
+      state.houses = [];
+    },
     LOADING_FINISH: (state) => {
       state.isLoading = false;
     },

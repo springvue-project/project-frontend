@@ -59,7 +59,7 @@
     </b-row>
     <b-row v-if="showDetail && this.showStore">
       <b-col cols="12" class="mt-5">
-        <h3 id="storeList">Store List</h3>
+        <h3 id="storelist">Store List</h3>
         <p>선택하신 아파트 주변의 {{ type }} 정보입니다.</p>
         <hr class="my-2" />
       </b-col>
@@ -128,6 +128,10 @@ export default {
       },
     );
   },
+  destroyed() {
+    //this.houseStore.resetHouseDealList();
+    //this.houseStore.resetHouseList();
+  },
   mounted() {
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
@@ -148,6 +152,7 @@ export default {
   computed: {
     ...mapState(houseStore, ["houses", "house", "isLoading"]),
     ...mapState(storeStore, ["showStore", "closeStore", "type"]),
+    ...mapActions(houseStore, ["resetHouseDealList", "resetHouseList"]),
   },
   watch: {
     ...mapState(houseStore, ["houses", "house", "isLoading"]),

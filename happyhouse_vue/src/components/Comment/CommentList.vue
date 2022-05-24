@@ -13,8 +13,15 @@
       </b-row>
     </b-container>
     <b-container v-else class="bv-example-row mt-3">
-      <b-row>
-        <b-col><b-alert show>댓글이 없습니다.</b-alert></b-col>
+      <b-row style="text-align:center">
+        <b-col style="text-align:center">
+          <div style="text-align:center">
+            <div class="bg-dark" style="width:5em; height:5em; margin:auto;">
+              <img :src="crying" />
+            </div>
+          </div>
+          <h3 style="margin-top:0.5em">댓글이 없습니다.</h3>
+        </b-col>
       </b-row>
     </b-container>
   </b-card>
@@ -32,9 +39,15 @@ export default {
   data() {
     return {
       comments: [],
+      crying: require("@/assets/img/crying.png"),
     };
   },
   computed: {},
+  methods: {
+    linkGen(pageNum) {
+      return pageNum === 1 ? "?" : `?page=${pageNum}`;
+    },
+  },
   created() {
     listComment(
       this.$route.params.articleno,
