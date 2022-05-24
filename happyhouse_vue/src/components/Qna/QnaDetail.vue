@@ -12,18 +12,26 @@
             >목록</b-button
           >
         </b-col>
-        <b-col class="text-right">
-          <b-button
-            variant="outline-info"
-            size="sm"
-            class="mr-2"
-            @click="moveModifyArticle"
-            >글수정</b-button
-          >
-          <b-button variant="outline-danger" size="sm" @click="deleteArticle"
-            >글삭제</b-button
-          >
-        </b-col>
+        <div
+          v-show="
+            userInfo.manager === 'manager' || userInfo.userId === article.userid
+              ? true
+              : false
+          "
+        >
+          <b-col class="text-right">
+            <b-button
+              variant="outline-info"
+              size="sm"
+              class="mr-2"
+              @click="moveModifyArticle"
+              >글수정</b-button
+            >
+            <b-button variant="outline-danger" size="sm" @click="deleteArticle"
+              >글삭제</b-button
+            >
+          </b-col>
+        </div>
       </b-row>
       <b-row class="mb-1">
         <b-col>
@@ -43,8 +51,8 @@
         </b-col>
       </b-row>
       <h5 style="margin-top: 15px">Comment</h5>
-      <comment-list style="margin-top: 1em" />
       <comment-input />
+      <comment-list style="margin-top: 1em" />
     </b-container>
   </div>
 </template>
@@ -54,6 +62,9 @@
 import { getArticle, deleteArticle } from "@/api/qna";
 import CommentInput from "@/components/Comment/CommentInput.vue";
 import CommentList from "@/components/Comment/CommentList.vue";
+import { mapState } from "vuex";
+
+const userStore = "userStore";
 
 export default {
   name: "qnadetail",
@@ -67,6 +78,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(userStore, ["userInfo"]),
     message() {
       if (this.article.content)
         return this.article.content.split("\n").join("<br>");

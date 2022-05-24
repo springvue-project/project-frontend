@@ -10,8 +10,8 @@
     >
     </b-form-textarea>
     <div class="row" style="margin-top:5px">
-      <div class="w-50">
-        <p>최대 500자 까지 입력가능합니다</p>
+      <div class="w-50" style="">
+        <p style="margin-left:1em">최대 500자 까지 입력가능합니다</p>
       </div>
       <div class="text-right col w-50">
         <div class="textarea-button">

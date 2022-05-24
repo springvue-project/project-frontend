@@ -124,20 +124,12 @@ export default {
     },
   },
   mounted() {
-    this.leafActive();
     window.addEventListener("resize", this.leafActive);
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.leafActive);
   },
-  methods: {
-    prev() {
-      this.$refs.myCarousel.prev();
-    },
-    next() {
-      this.$refs.myCarousel.next();
-    },
-  },
+  methods: {},
 };
 </script>
 <style lang="scss">
