@@ -123,6 +123,10 @@ export default {
       if (this.isLogin) {
         await this.getUserInfo(token);
         this.$router.push({ name: "index" });
+      } else {
+        alert("회원 정보가 일치하지 않습니다!");
+        this.userId = "";
+        this.userPwd = "";
       }
     },
     findPwd() {
