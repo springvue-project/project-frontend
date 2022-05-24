@@ -80,14 +80,17 @@ export default {
     },
     initMap() {
       const container = document.getElementById("map");
+      var center = new kakao.maps.LatLng(35.09532654, 128.8557671);
       const options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        center: center,
         level: 5,
       };
 
       //지도 객체를 등록합니다.
       //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
       this.map = new kakao.maps.Map(container, options);
+
+      this.displayMarker(center, "SSAFY BUK");
     },
     displayMarker(locPosition, message) {
       // 마커를 생성합니다
@@ -106,7 +109,7 @@ export default {
       });
 
       // 인포윈도우를 마커위에 표시합니다
-      infowindow.open(this.map, marker);
+      //infowindow.open(this.map, marker);
 
       // 지도 중심좌표를 접속위치로 변경합니다
       this.map.setCenter(locPosition);
