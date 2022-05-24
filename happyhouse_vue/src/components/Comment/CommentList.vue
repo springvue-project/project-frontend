@@ -49,7 +49,6 @@ export default {
     return {
       crying: require("@/assets/img/crying.png"),
       comments: [],
-      crying: require("@/assets/img/crying.png"),
     };
   },
   computed: {},
@@ -68,11 +67,6 @@ export default {
         console.log(error);
       },
     );
-  },
-  methods: {
-    linkGen(pageNum) {
-      return pageNum === 1 ? "?" : `?page=${pageNum}`;
-    },
   },
 };
 </script>

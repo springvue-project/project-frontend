@@ -1,5 +1,4 @@
 <template>
-
   <b-row class="my-2">
     <b-col cols="6" class="align-self-center">
       <div
@@ -25,7 +24,6 @@
           >
           <md-tooltip md-direction="top">click! 거래 정보 조회</md-tooltip>
         </router-link>
-
       </b-col>
       <b-col cols="1" class="icon-div align-self-center">
         <router-link to="#storelist">
@@ -45,7 +43,6 @@
             >click! 부동산 찾기</md-tooltip
           ></router-link
         >
-
       </b-col>
       <b-col cols="1" class="icon-div align-self-center">
         <router-link to="#storelist">
@@ -57,7 +54,6 @@
             >click! 카페 찾기</md-tooltip
           ></router-link
         >
-
       </b-col>
     </div>
   </b-row>

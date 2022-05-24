@@ -129,7 +129,6 @@ export default {
   beforeDestroy() {
     window.removeEventListener("resize", this.leafActive);
   },
-
 };
 </script>
 <style lang="scss">

@@ -70,7 +70,6 @@ const houseStore = {
     LOADING_START: (state) => {
       state.isLoading = true;
     },
-
   },
 
   actions: {
