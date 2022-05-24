@@ -201,7 +201,6 @@ const houseStore = {
       commit("CLEAR_HOUSEDEAL_LIST");
     },
 
-    //CLEAR_HOUSE_LIST
     resetHouseList: ({ commit }) => {
       commit("CLEAR_HOUSE_LIST");
     },
