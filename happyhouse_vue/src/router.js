@@ -31,6 +31,8 @@ import UserView from "@/views/UserView.vue";
 import UserLogin from "@/components/User/UserLogin.vue";
 import UserRegist from "@/components/User/UserRegist.vue";
 import UserProfile from "@/components/User/UserProfile.vue";
+import UserInterest from "@/components/User/UserInterest.vue";
+
 //AroundApt
 import AroundApt from "@/views/AroundApt.vue";
 
@@ -160,6 +162,20 @@ export default new Router({
           beforeEnter: onlyAuthUser,
           components: {
             default: UserProfile,
+            header: MainNavbar,
+            footer: MainFooter,
+          },
+          props: {
+            header: { colorOnScroll: 400 },
+            footer: { backgroundColor: "black" },
+          },
+        },
+        {
+          path: "myhouse/:id",
+          name: "myhouse",
+          beforeEnter: onlyAuthUser,
+          components: {
+            default: UserInterest,
             header: MainNavbar,
             footer: MainFooter,
           },

@@ -25,18 +25,6 @@
           <div class="md-collapse">
             <div class="md-collapse-wrapper">
               <md-list>
-                <md-list-item
-                  ><router-link to="/announce">
-                    <i class="material-icons">content_paste</i>
-                    <p>Announcement</p>
-                  </router-link>
-                </md-list-item>
-                <md-list-item>
-                  <router-link to="/qna">
-                    <i class="material-icons">question_answer</i>
-                    <p>QnA</p>
-                  </router-link>
-                </md-list-item>
                 <li class="md-list-item">
                   <a
                     href="javascript:void(0)"
@@ -50,26 +38,26 @@
                           data-toggle="dropdown"
                         >
                           <i class="material-icons">apps</i>
-                          <p>Service</p>
+                          <p style="font-size: 14px;">Service</p>
                         </md-button>
                         <ul class="dropdown-menu dropdown-with-icons">
                           <li>
                             <router-link to="/house">
                               <i class="material-icons">house</i>
-                              <p>Search by Address</p>
+                              <p>Search Houses</p>
                             </router-link>
                           </li>
                           <li>
                             <router-link to="/aroundapt"
-                              ><i class="material-icons">real_estate_agent</i>
-                              <p>Search by Coordinates</p></router-link
+                              ><i class="material-icons">place</i>
+                              <p>Search by Marker</p></router-link
                             >
                           </li>
 
                           <li>
                             <router-link to="/parking">
                               <i class="material-icons">directions_car</i>
-                              <p>Parking</p>
+                              <p>Find Parking</p>
                             </router-link>
                           </li>
                         </ul>
@@ -77,6 +65,19 @@
                     </div>
                   </a>
                 </li>
+                <md-list-item
+                  ><router-link to="/announce">
+                    <i class="material-icons">content_paste</i>
+                    <p>Announcement</p>
+                  </router-link>
+                </md-list-item>
+                <md-list-item>
+                  <router-link to="/qna">
+                    <i class="material-icons">question_answer</i>
+                    <p>QnA</p>
+                  </router-link>
+                </md-list-item>
+
                 <li class="md-list-item">
                   <a
                     href="javascript:void(0)"
@@ -90,7 +91,7 @@
                           data-toggle="dropdown"
                         >
                           <i class="material-icons">account_box</i>
-                          <p>User</p>
+                          <p style="font-size: 14px;">User</p>
                         </md-button>
                         <ul
                           class="dropdown-menu dropdown-with-icons"
@@ -106,6 +107,16 @@
                             <router-link to="/user/profile"
                               ><i class="material-icons">account_circle</i>
                               <p>Profile</p>
+                            </router-link>
+                          </li>
+                          <li>
+                            <router-link
+                              :to="{
+                                name: 'myhouse',
+                                params: { id: this.userInfo.userId },
+                              }"
+                              ><i class="material-icons">favorite</i>
+                              <p>My House</p>
                             </router-link>
                           </li>
                         </ul>

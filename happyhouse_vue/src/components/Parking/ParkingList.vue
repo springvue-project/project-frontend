@@ -152,7 +152,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .store-icon {
   cursor: pointer;
 }

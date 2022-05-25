@@ -8,6 +8,7 @@ const userStore = {
     isLogin: false,
     isLoginError: false,
     userInfo: null,
+    myHouses: [],
   },
   getters: {
     checkUserInfo: function(state) {
@@ -24,6 +25,14 @@ const userStore = {
     SET_USER_INFO: (state, userInfo) => {
       state.isLogin = true;
       state.userInfo = userInfo;
+    },
+    ADD_MY_HOUSES: (state, house) => {
+      if (state.myHouses.indexOf(house) < 0) {
+        state.myHouses.push(house);
+      }
+    },
+    SET_MY_HOUSES: (state, houses) => {
+      state.myHouses = houses;
     },
   },
   actions: {
