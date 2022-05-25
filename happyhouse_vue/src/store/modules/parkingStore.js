@@ -41,9 +41,9 @@ const parkingStore = {
       //   console.log(houses);
       state.parkings = parkings;
     },
-    // SET_DETAIL_HOUSE: (state, house) => {
-    //   state.house = house;
-    // },
+    SET_DETAIL_PARKING: (state, parking) => {
+      state.parking = parking;
+    },
     //주석생성
   },
 
@@ -109,6 +109,9 @@ const parkingStore = {
           console.log(error);
         },
       );
+    },
+    detailParking: ({ commit }, parking) => {
+      commit("SET_DETAIL_PARKING", parking);
     },
   },
 };

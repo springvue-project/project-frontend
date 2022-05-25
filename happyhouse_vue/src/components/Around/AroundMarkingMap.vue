@@ -365,6 +365,11 @@ export default {
       return require(`@/assets/img/apt/apt.png`);
     },
     searchAroundApt() {
+      if (this.markedAddr == null || this.markedAddr.length == 0) {
+        alert("지도를 눌러 마커를 생성해 주세요.");
+        return;
+      }
+      this.closeOverlay();
       var avgLat = 0,
         avgLng = 0;
       this.markers.forEach((marker) => {

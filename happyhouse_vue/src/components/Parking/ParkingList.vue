@@ -19,8 +19,15 @@
           </tr>
         </thead>
         <tbody slot="body">
-          <tr v-for="(parking, index) in parkings" :key="index">
-            <td>{{ parking.parkName }}</td>
+          <tr
+            @click="selectParking(parking)"
+            v-for="(parking, index) in parkings"
+            :key="index"
+            style="cursor:pointer;"
+          >
+            <td>
+              <span>{{ parking.parkName }}</span>
+            </td>
             <td>
               <i
                 @click="openClassicModal(parking)"
@@ -101,7 +108,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import { Modal } from "@/components";
 
 const parkingStore = "parkingStore";
@@ -119,6 +126,7 @@ export default {
     ...mapState(parkingStore, ["parkings"]),
   },
   methods: {
+    ...mapActions(parkingStore, ["detailParking"]),
     classicModalHide() {
       this.classicModal = false;
     },
@@ -136,6 +144,9 @@ export default {
         parking.parkAddress == "" ? "정보없음" : parking.parkAddress;
       this.parking = parking;
       this.classicModal = true;
+    },
+    selectParking(parking) {
+      this.detailParking(parking);
     },
   },
 };
