@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-5">
+  <div class="mt-1">
     <div id="storemap" style="height:60vh;"></div>
   </div>
 </template>
@@ -135,14 +135,14 @@ export default {
       }
       console.log("this.type", imgsrc);
       var infoContent =
-        `<div class="mapwrap">` +
-        `    <div class="mapinfo">` +
+        `<div class="store-mapwrap">` +
+        `    <div class="store-mapinfo">` +
         `        <div class="title">` +
         `            ${store.storeName}` +
         `        </div>` +
         `        <div class="body">` +
         `               <div class="img">` +
-        `                 <img src="${imgsrc}"/>` +
+        `                 <img src="${imgsrc}" style="width:180px;"/>` +
         `               </div>` +
         `        </div>` +
         `            <div class="desc">` +
@@ -191,37 +191,36 @@ export default {
 };
 </script>
 
-<style scoped>
-.mapwrap {
+<style>
+.store-mapwrap {
   position: absolute;
   left: 0;
   bottom: 40px;
   width: 288px;
-  height: 132px;
+  height: 240px;
   margin-left: -144px;
   overflow: hidden;
   font-size: 12px;
 
   line-height: 1.5;
 }
-.mapwrap * {
+.store-mapwrap * {
   padding: 0;
   margin: 0;
 }
-.mapwrap .mapinfo {
-  /* width: 286px;
-  height: 120px; */
+.store-mapwrap .store-mapinfo {
+  height: 230px;
   border-radius: 5px;
   border-bottom: 2px solid #ccc;
   border-right: 1px solid #ccc;
   overflow: hidden;
   background: #fff;
 }
-.mapwrap .mapinfo:nth-child(1) {
+.store-mapwrap .mapinfo:nth-child(1) {
   border: 0;
   box-shadow: 0px 1px 2px #888;
 }
-.mapinfo .title {
+.store-mapinfo .title {
   font-size: 15px;
   text-align: center;
   margin: 0;
@@ -229,7 +228,7 @@ export default {
   padding-top: 3px;
   font-family: "Gothic", "Arial Narrow", Arial, sans-serif;
 }
-.mapinfo .close {
+.store-mapinfo .close {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -238,43 +237,39 @@ export default {
   height: 17px;
   background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png");
 }
-.mapinfo .close:hover {
+.store-mapinfo .close:hover {
   cursor: pointer;
 }
-.mapinfo .body {
+.store-mapinfo .body {
   position: relative;
   overflow: hidden;
   margin: 0 10px;
 }
-.mapinfo .desc {
+.store-mapinfo .desc {
+  top: 3px;
   text-align: center;
   position: relative;
-  margin: 13px 0 0 0px;
   height: 75px;
 }
-.desc .ellipsis {
+.store-mapinfo .desc .ellipsis {
   font-size: 10px!;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.desc .jibun {
+.store-mapinfo .desc .jibun {
   font-size: 11px;
   color: #888;
   margin-top: -2px;
 }
-.mapinfo .img {
-  position: absolute;
-  margin: 0 10px;
-  top: 6px;
-  left: 5px;
-  width: 73px;
-  height: 71px;
+.store-mapinfo .img {
+  position: relative;
+  width: 100%;
   color: #888;
   overflow: hidden;
   text-align: center;
 }
-.mapinfo:after {
+.store-mapinfo:after {
   content: "";
   position: absolute;
   margin-left: -12px;

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <md-switch v-model="switch1"
+      ><span style="color:black;">교통정보</span></md-switch
+    >
     <div id="map" style="height:55vh;"></div>
   </div>
 </template>
@@ -16,17 +19,34 @@ export default {
       map: null,
       markers: [],
       position: [],
+      infoOverlay: [],
+      switch1: null,
     };
   },
   //받아오는 parkings(pakinglist)가 변경될때마다 마커 다시 생성
   watch: {
-    ...mapState(parkingStore, ["parkings"]),
+    ...mapState(parkingStore, ["parkings", "parking"]),
     parkings: function() {
       console.log("computed", this.parkings);
 
       if (window.kakao) {
         this.removeMarkers();
         this.createMarkers();
+      }
+    },
+    parking: function() {
+      console.log("watch", this.parking);
+      this.closeOverlay();
+      this.createInfoOverlay(this.parking);
+      console.log(this.map.getLevel());
+      this.map.setLevel(3);
+      this.map.panTo(new kakao.maps.LatLng(this.parking.lat, this.parking.lng));
+    },
+    switch1: function() {
+      if (this.switch1) {
+        this.map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+      } else {
+        this.map.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
       }
     },
   },
@@ -48,7 +68,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(parkingStore, ["parkings"]),
+    ...mapState(parkingStore, ["parkings", "parking"]),
   },
   methods: {
     initMap() {
@@ -79,12 +99,20 @@ export default {
     //마커 생성
     createMarkers() {
       var bounds = new kakao.maps.LatLngBounds();
+      var imageSrc = require(`@/assets/img/marker/parking_marker.png`);
+      ("");
+      // 마커 이미지의 이미지 크기 입니다
+      var imageSize = new kakao.maps.Size(24, 32);
+
+      // 마커 이미지를 생성합니다
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
       //받아온 parkings배열을 돌면서 markers배열에 추가
       this.parkings.forEach((parking) => {
         this.markers.push(
           new kakao.maps.Marker({
             map: this.map,
+            image: markerImage,
             position: new kakao.maps.LatLng(parking.lat, parking.lng),
           }),
         ),
@@ -102,8 +130,73 @@ export default {
       //초기화 안 하면 마커를 지운 자리까지 bounds로 인식해서 전국지도가 보임!!!!!!
       this.position = [];
     },
+    createInfoOverlay(parking) {
+      var infoContent =
+        `<div class="park-mapwrap">` +
+        `    <div class="park-mapinfo">` +
+        `        <div class="title">` +
+        `            ${parking.parkName}` +
+        `        </div>` +
+        `    </div>` +
+        `</div>`;
+
+      this.infoOverlay.push(
+        new kakao.maps.CustomOverlay({
+          map: this.map,
+          position: new kakao.maps.LatLng(parking.lat, parking.lng),
+          content: infoContent,
+          xAnchor: 0.3,
+          yAnchor: 0.91,
+        }),
+      );
+      this.map.panTo(new kakao.maps.LatLng(parking.lat, parking.lng));
+    },
+    closeOverlay() {
+      if (this.infoOverlay) {
+        this.infoOverlay.forEach((item) => {
+          item.setMap(null);
+        });
+      }
+    },
   },
+  traffic() {},
 };
 </script>
 
-<style></style>
+<style>
+.park-mapwrap * {
+  padding: 0;
+  margin: 0;
+}
+.park-mapwrap {
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  width: 220px;
+  height: 50px;
+  margin-left: -110px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.park-mapwrap .park-mapinfo {
+  height: 78%;
+  border-radius: 5px;
+  border-bottom: 2px solid #ccc;
+  border-right: 1px solid #ccc;
+  overflow: hidden;
+  background: #fff;
+}
+.park-mapwrap .park-mapinfo:nth-child(1) {
+  border: 0;
+  box-shadow: 0px 1px 2px #888;
+}
+.park-mapinfo .title {
+  font-size: 15px;
+  text-align: center;
+  margin: 0;
+  line-height: 2rem;
+  padding-top: 5px;
+  font-family: "Gothic", "Arial Narrow", Arial, sans-serif;
+}
+</style>
