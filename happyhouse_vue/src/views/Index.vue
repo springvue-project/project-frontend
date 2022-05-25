@@ -16,7 +16,10 @@
         >
           <slide>
             <div class="carousel-caption">
-              <div class="brand" style="margin-bottom:5em">
+              <div
+                class="brand"
+                style="margin-bottom:5em; text-shadow: 3px 3px 6px black"
+              >
                 <h1>Happy House</h1>
                 <h3>SSAFY 7th BUK Java Class 4</h3>
               </div>
@@ -25,7 +28,10 @@
           </slide>
           <slide>
             <div class="carousel-caption">
-              <h1 class="service-title" style="margin-bottom:3em">
+              <h1
+                class="service-title"
+                style="margin-bottom:3em; text-shadow: 3px 3px 6px black"
+              >
                 HouseSearch Service
               </h1>
             </div>
@@ -41,7 +47,7 @@
           </slide>
           <slide>
             <div class="carousel-caption">
-              <h1 style="margin-bottom:3em">
+              <h1 style="margin-bottom:3em; text-shadow: 3px 3px 6px black">
                 Search Arround Service
               </h1>
             </div>
