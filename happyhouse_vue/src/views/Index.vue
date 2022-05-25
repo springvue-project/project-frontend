@@ -18,6 +18,7 @@
             <div class="carousel-caption">
               <div class="brand" style="margin-bottom:5em">
                 <h1>Happy House</h1>
+                <br />
                 <h3>SSAFY 7th BUK Java Class 4</h3>
               </div>
             </div>
@@ -26,7 +27,7 @@
           <slide>
             <div class="carousel-caption">
               <h1 class="service-title" style="margin-bottom:3em">
-                HouseSearch Service
+                Search House
               </h1>
             </div>
             <img :src="carousel2" alt="carousel2" class="img" />
@@ -34,7 +35,7 @@
           <slide>
             <div class="carousel-caption">
               <h1 style="margin-bottom:3em">
-                Parking Service
+                Find Parking
               </h1>
             </div>
             <img :src="carousel3" alt="carousel3" class="img" />
@@ -42,7 +43,7 @@
           <slide>
             <div class="carousel-caption">
               <h1 style="margin-bottom:3em">
-                Search Arround Service
+                Search by Marker
               </h1>
             </div>
             <img :src="carousel4" alt="carousel4" class="img" />
