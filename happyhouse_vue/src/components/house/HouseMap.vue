@@ -57,10 +57,9 @@ export default {
 
       if (window.kakao) {
         this.removeMarkers(this.markers);
-
+        this.closeOverlay();
         this.createHouseMarkers(this.houses, this.markers);
         this.setMarkers(this.markers);
-
         this.setBounds(this.markers);
       }
       return this.houses;
@@ -188,7 +187,7 @@ export default {
   bottom: 40px;
   width: 350px;
   height: 210px;
-  margin-left: -144px;
+  margin-left: -175px;
   overflow: hidden;
   font-size: 12px;
   line-height: 1.5;

@@ -31,7 +31,7 @@
             <b-col
               cols="5"
               style="height:500px; overflow:scroll; overflow-x:hidden"
-              class="scroll"
+              class="scroll mt-4"
             >
               <parking-list />
             </b-col>
