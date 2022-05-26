@@ -1,5 +1,8 @@
 <template>
-  <b-container v-if="stores && stores.length != 0" class="bv-example-row mt-3">
+  <b-container
+    v-if="this.stores && this.stores.length != 0"
+    class="bv-example-row mt-3"
+  >
     <store-list-item
       v-for="(store, index) in stores"
       :key="index"

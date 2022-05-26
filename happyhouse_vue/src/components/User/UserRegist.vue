@@ -107,7 +107,7 @@ export default {
         },
         (response) => {
           if (response.status != "200") {
-            alret("회원가입 실패");
+            alert("오류가 발생했습니다.");
           }
         },
       );

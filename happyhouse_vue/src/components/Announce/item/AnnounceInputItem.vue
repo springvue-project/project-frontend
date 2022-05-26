@@ -2,12 +2,7 @@
   <b-row class="mb-1">
     <b-col style="text-align: left">
       <b-form @submit="onSubmit" @reset="onReset">
-        <b-form-group
-          id="userid-group"
-          label="작성자:"
-          label-for="userid"
-          description="작성자를 입력하세요."
-        >
+        <b-form-group id="userid-group" label="작성자:" label-for="userid">
           <b-form-input
             id="userid"
             :disabled="isUserid"
@@ -18,12 +13,7 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group
-          id="subject-group"
-          label="제목:"
-          label-for="subject"
-          description="제목을 입력하세요."
-        >
+        <b-form-group id="subject-group" label="제목:" label-for="subject">
           <b-form-input
             id="subject"
             v-model="article.subject"

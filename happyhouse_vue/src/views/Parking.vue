@@ -3,7 +3,7 @@
     <div class="section page-header header-filter" :style="headerStyle">
       <div class="container">
         <h3 class="underline-steelblue">
-          Parking Service
+          Fing Parking
         </h3>
         <a href="#main"
           ><md-button class="btn-down md-just-icon md-round"

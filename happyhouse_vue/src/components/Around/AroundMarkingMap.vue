@@ -57,14 +57,14 @@
         <house-detail-list id="housedetaillist" />
       </b-col>
     </b-row>
-    <b-row v-if="showDetail && this.showStore">
+    <b-row v-if="this.stores && this.stores.length != 0">
       <b-col cols="12" class="mt-5">
         <h3 id="storelist">Store List</h3>
         <p>선택하신 아파트 주변의 {{ type }} 정보입니다.</p>
         <hr class="my-2" />
       </b-col>
     </b-row>
-    <b-row v-if="showDetail && this.showStore">
+    <b-row v-if="this.stores && this.stores.length != 0">
       <b-col
         cols="5"
         style="height:500px; overflow:scroll; overflow-x:hidden"
@@ -152,11 +152,11 @@ export default {
   },
   computed: {
     ...mapState(houseStore, ["houses", "house", "isLoading"]),
-    ...mapState(storeStore, ["showStore", "closeStore", "type"]),
+    ...mapState(storeStore, ["showStore", "closeStore", "type", "stores"]),
   },
   watch: {
     ...mapState(houseStore, ["houses", "house", "isLoading"]),
-    ...mapState(storeStore, ["showStore", "closeStore", "type"]),
+    ...mapState(storeStore, ["showStore", "closeStore", "type", "stores"]),
     mouseLntLng: function() {
       this.setMarkers(this.markers);
     },
