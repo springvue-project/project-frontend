@@ -3,7 +3,7 @@
     <div class="section page-header header-filter" :style="headerStyle">
       <div class="container">
         <h3 class="underline-steelblue">
-          House Service
+          Search Houses
         </h3>
         <a href="#main"
           ><md-button class="btn-down md-just-icon md-round"
@@ -59,14 +59,14 @@
             </b-col>
           </b-row>
 
-          <b-row v-if="this.housedeals && this.showStore">
+          <b-row v-if="this.stores && this.stores.length != 0">
             <b-col cols="12" class="mt-5">
               <h3 id="storelist">Store List</h3>
               <p>선택하신 아파트 주변의 {{ type }} 정보입니다.</p>
               <hr class="my-2" />
             </b-col>
           </b-row>
-          <b-row v-if="this.showStore">
+          <b-row v-if="this.stores && this.stores.length != 0">
             <b-col
               cols="5"
               style="height:600px; overflow:scroll; overflow-x:hidden"
@@ -116,24 +116,31 @@ export default {
   data() {
     return {};
   },
-
   destroyed() {
     if (sessionStorage.getItem("dongCode") != null) {
       sessionStorage.removeItem("dongCode");
     }
+    reset();
   },
 
   computed: {
     ...mapState(houseStore, ["housedeals"]),
-    ...mapState(storeStore, ["showStore", "type"]),
-    ...mapActions(houseStore, ["resetHouseDealList", "resetHouseList"]),
+    ...mapState(storeStore, ["showStore", "type", "stores"]),
     headerStyle() {
       return {
         backgroundImage: `url(${this.header})`,
       };
     },
   },
-  watch: {},
+  methods: {
+    ...mapActions(houseStore, ["resetHouseDealList", "resetHouseList"]),
+    ...mapActions(storeStore, ["cleanStoreList"]),
+    reset() {
+      this.resetHouseDealList();
+      this.resetHouseList();
+      this.cleanStoreList();
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
