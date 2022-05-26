@@ -39,6 +39,7 @@ export default {
   data() {
     return {
       comments: [],
+      crying: require(`@/assets/img/crying.png`),
     };
   },
   computed: {},

@@ -38,7 +38,7 @@
           <slide>
             <div class="carousel-caption">
               <h1 style="margin-bottom:3em">
-                Find Parking
+                Search Parking lot
               </h1>
             </div>
             <img :src="carousel3" alt="carousel3" class="img" />
