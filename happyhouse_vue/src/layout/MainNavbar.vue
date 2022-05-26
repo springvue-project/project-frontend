@@ -41,6 +41,7 @@
                           <p style="font-size: 14px;">Service</p>
                         </md-button>
                         <ul class="dropdown-menu dropdown-with-icons">
+                          <li style="margin-left:1em">House</li>
                           <li>
                             <router-link to="/house">
                               <i class="material-icons">house</i>
@@ -53,11 +54,12 @@
                               <p>Search by Marker</p></router-link
                             >
                           </li>
-
+                          <hr />
+                          <li style="margin-left:1em">Parking</li>
                           <li>
                             <router-link to="/parking">
                               <i class="material-icons">directions_car</i>
-                              <p>Find Parking</p>
+                              <p>Search Parking lot</p>
                             </router-link>
                           </li>
                         </ul>

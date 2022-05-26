@@ -16,7 +16,10 @@
         >
           <slide>
             <div class="carousel-caption">
-              <div class="brand" style="margin-bottom:5em">
+              <div
+                class="brand"
+                style="margin-bottom:5em; text-shadow: 3px 3px 6px black"
+              >
                 <h1>Happy House</h1>
                 <br />
                 <h3>SSAFY 7th BUK Java Class 4</h3>
@@ -35,7 +38,7 @@
           <slide>
             <div class="carousel-caption">
               <h1 style="margin-bottom:3em">
-                Find Parking
+                Search Parking lot
               </h1>
             </div>
             <img :src="carousel3" alt="carousel3" class="img" />

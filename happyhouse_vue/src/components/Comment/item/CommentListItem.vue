@@ -45,6 +45,7 @@ import { deleteComment } from "@/api/comment";
 const userStore = "userStore";
 export default {
   name: "commentlistitem",
+
   props: {
     comment: Object,
   },
